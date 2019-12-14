@@ -27,5 +27,5 @@ app.listen(8005, (err) => {
         console.log(err)
         return
     }
-    console.log("Server has started successfully on port 8005");
+    console.log("Products Server has started successfully on port 8005");
 })

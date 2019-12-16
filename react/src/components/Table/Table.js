@@ -1,11 +1,12 @@
 import React from 'react'
 import './Table.css'
 import Alert from '../Alert/Alert'
-import TableRow from './TableTools'
+import TableRow from './TableRow'
 import { connect } from 'react-redux'
 import store from '../../redux/store'
 
 import { deleteProduct } from '../../redux/actions/productAction'
+import axios from 'axios'
 
 
 class Table extends React.Component {
@@ -25,9 +26,16 @@ class Table extends React.Component {
 
     }
     
-    deleteProduct = (product) => {
+    deleteProduct = (product, productID) => {
         this.setState({alertShow: true})
         this.setState({product: product})
+        axios.delete(`http://localhost:8005/app/v1/products/${productID}`)
+        .then(res => {
+            console.log(res)
+        })
+        .catch(err => {
+            console.log(err)
+        })
     }
 
     deleteProductHandler = () => {
@@ -35,13 +43,12 @@ class Table extends React.Component {
         store.dispatch(deleteProduct(this.state.product))
     }
 
-
     render() {
         let tableRow = null;
         if(this.props.products) {
             tableRow = this.props.products.map(product => {
-                return (<TableRow key={product.id} name={product.name}
-                    deleteProduct={() => this.deleteProduct(product)}
+                return (<TableRow key={product._id} name={product.name}
+                    deleteProduct={() => this.deleteProduct(product, product._id)}
                     type={product.type}
                     description={product.description}
                     date={product.date}

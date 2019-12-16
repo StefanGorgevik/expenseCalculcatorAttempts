@@ -1,3 +1,9 @@
+export const getProducts = (data) => {
+    return {
+        type: 'GET_PRODUCTS',
+        payload: data
+    }
+}
 export const saveProductAction = (data) => {
     return {
         type: 'SAVE_PRODUCT',

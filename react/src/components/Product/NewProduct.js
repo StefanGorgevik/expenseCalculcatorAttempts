@@ -4,11 +4,11 @@ import './New-product.css'
 import {saveProductAction} from '../../redux/actions/productAction'
 import store from '../../redux/store'
 import {Link} from 'react-router-dom'
+import axios from 'axios'
 class NewProduct extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            
                 name: '',
                 type: '',
                 description: '',
@@ -23,9 +23,26 @@ class NewProduct extends React.Component {
         this.setState({[event.target.id] : event.target.value})
     }
 
-    createProduct = () => {
-        const newProduct = {...this.state, id: Math.random()};
-        store.dispatch(saveProductAction(newProduct))
+    createProduct = (event) => {
+        store.dispatch(saveProductAction(this.state))
+        if(this.state.name == '' || this.state.type == '' || 
+            this.state.description == '' || this.state.date=='' || this.state.price == '') {
+                event.preventDefault();
+                alert('Fill out the fields correctly!')
+        } else if(this.state.name !== '' || this.state.type !== '' || 
+        this.state.description !== '' || this.state.date !== '' || this.state.price !== '') {
+            axios.post('http://localhost:8005/app/v1/products', {
+                name: this.state.name,
+                type: this.state.type,
+                description: this.state.description,
+                date: this.state.date,
+                price: this.state.price,
+                _created: new Date()
+        }
+            )
+            .then(res => console.log(res))
+            .catch(err => console.log(err.response))
+        }
     }
 
     render() {
@@ -50,7 +67,7 @@ class NewProduct extends React.Component {
                             </p>
                             <p className="input-container">
                                 <label className="text-field-input" htmlFor="date">Product Date</label>
-                                <input onChange={this.saveProduct} className="text-field" type="text" name="date" id="date" />
+                                <input onChange={this.saveProduct} className="text-field" type="date" name="date" id="date" />
                             </p>
                             <p className="input-container">
                                 <label className="text-field-input" htmlFor="price">Product Price</label>

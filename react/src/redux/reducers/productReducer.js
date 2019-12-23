@@ -1,5 +1,8 @@
 const initState = {
-    products: []
+    products: [],
+    totalPrice: '',
+    productToEdit: '',
+    editProductClicked: ''
 }
 
 export function productReducer(state = initState, action) {
@@ -19,6 +22,17 @@ export function productReducer(state = initState, action) {
                 return action.payload._id !== product._id
             })
             return {...state, products: newProducts}
+        }
+        case "GET_TOTAL_PRICE": {
+            return {...state, totalPrice: action.payload}
+        }
+
+        case "EDIT_PRODUCT": {
+            return {...state, productToEdit: action.product}
+        }
+
+        case "EDIT_PRODUCT_CLICKED": {
+            return {...state, editProductClicked: action.editProductClicked}
         }
         default:
             return state

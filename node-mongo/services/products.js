@@ -17,12 +17,12 @@ app.use(cors())
 
 //routes and methods
 const url = '/app/v1/products'
-app.get(url, productHandler.getAllProducts)
-app.get(url + ':id', productHandler.getOne)
-app.post(url, productHandler.saveProduct)
-app.put(url + ':id', productHandler.replaceProduct);
-app.patch(url + ':id', productHandler.updateProduct);
-app.delete(url + ':id', productHandler.deleteProduct)
+app.get(url, productHandler.getAllProducts);
+app.get(url + '/:id', productHandler.getOne);
+app.post(url, productHandler.saveProduct);
+app.put(url + '/:id', productHandler.replaceProduct);
+app.patch(url + '/:id', productHandler.updateProduct);
+app.delete(url + '/:id', productHandler.deleteProduct);
 
 app.listen(8005, (err) => {
     if(err) {

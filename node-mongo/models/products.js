@@ -7,7 +7,8 @@ const Product = mongoose.model(
         description: String,
         date: Date,
         price: String, 
-        _created: Date
+        _created: Date,
+        _modified: Date
     })
 )
 
@@ -59,7 +60,7 @@ const replaceProduct = (id, data) => {
 
 const deleteProduct = (id) => {
     return new Promise((success,fail) => {
-        Product.findByIdAndRemove(id, err => {
+        Product.deleteOne({_id: id}, err => {
             if(err) {
                 return fail(err);
             }

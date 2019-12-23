@@ -5,66 +5,89 @@ import TableRow from './TableRow'
 import { connect } from 'react-redux'
 import store from '../../redux/store'
 
-import { deleteProduct } from '../../redux/actions/productAction'
+import { deleteProduct, getProducts, getTotalPrice, editProduct, editProductClicked } from '../../redux/actions/productAction'
 import axios from 'axios'
 
 
 class Table extends React.Component {
     constructor(props) {
         super(props);
-        this.state= {
+        this.state = {
             alertShow: false,
-            product: null
+            product: null,
+            editProductClicked: false
         }
     }
 
+    componentDidMount() {
+        axios.get("http://localhost:8005/app/v1/products")
+            .then(res => {
+                store.dispatch(getProducts(res.data));
+                let totalPrice = 0;
+                for (let i = 0; i < res.data.length; i++) {
+                    totalPrice += parseInt(res.data[i].price)
+                }
+                store.dispatch(getTotalPrice(totalPrice));
+                
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
+
+
     hideAlert = () => {
-        this.setState({alertShow: false})
+        this.setState({ alertShow: false })
     }
 
-    editProduct = () => {
+    editProduct = (product) => {
+        const clicked = !this.state.editProductClicked
+        store.dispatch(editProduct(product));
+        store.dispatch(editProductClicked(clicked));
 
     }
-    
+
     deleteProduct = (product, productID) => {
-        this.setState({alertShow: true})
-        this.setState({product: product})
+        this.setState({ alertShow: true })
+        this.setState({ product: product })
         axios.delete(`http://localhost:8005/app/v1/products/${productID}`)
-        .then(res => {
-            console.log(res)
-        })
-        .catch(err => {
-            console.log(err)
-        })
+            .then(res => {
+                console.log(res)
+            })
+            .catch(err => {
+                console.log(err)
+            })
     }
 
     deleteProductHandler = () => {
-        this.setState({alertShow: false})
+        this.setState({ alertShow: false })
         store.dispatch(deleteProduct(this.state.product))
     }
 
     render() {
         let tableRow = null;
-        if(this.props.products) {
+        if (this.props.products) {
             tableRow = this.props.products.map(product => {
                 return (<TableRow key={product._id} name={product.name}
                     deleteProduct={() => this.deleteProduct(product, product._id)}
+                    editProduct={() => this.editProduct(product)}
                     type={product.type}
                     description={product.description}
                     date={product.date}
                     price={product.price}
                 />)
-                })
+            })
         }
-        
+
         let alert = null;
-            if(this.state.alertShow) {
-                alert = <Alert hide={this.hideAlert}
-                    delete={this.deleteProductHandler}
-                />
-            }
+        if (this.state.alertShow) {
+            alert = <Alert hide={this.hideAlert}
+                delete={this.deleteProductHandler}
+            />
+        }
+
         return (
-            
+
             <React.Fragment>
                 <main className="main-box">
                     <table className="Table">
@@ -77,11 +100,12 @@ class Table extends React.Component {
                                 <th>Product Price</th>
                                 <th>Product Options</th>
                             </tr>
+
                         </thead>
-                        <tr>
-                            <td id="emptyTd"></td>
-                        </tr>
                         <tbody>
+                            <tr>
+                                <td id="emptyTd"></td>
+                            </tr>
                             {tableRow}
                         </tbody>
                     </table>
@@ -92,7 +116,7 @@ class Table extends React.Component {
     }
 }
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
     return {
         products: state.products
     }

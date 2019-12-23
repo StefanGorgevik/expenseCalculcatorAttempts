@@ -11,13 +11,24 @@ DBConnection.initialize(c);
 
 app.use(bodyParser.json());
 
+const cors = require('cors');
+app.use(cors())
+
+//jwt tokens
+// app.use(                                                       //sekoj req ke pomine niz ova i ke vrati req.user
+//     jwt(
+//         { secret: config.getConfig('jwt').key }
+//     )
+//         .unless(
+//             { path: ['/app/v1/register', '/app/v1/login'] }
+//         )
+// );
+
 //routes
 const authHandler = require('../handlers/authHandler')
 const url = '/app/v1'
-app.post('/app/v1/register', authHandler.register)
-app.get(url, (req,res)=> {
-    res.send("OK")
-})
+
+app.post(url + '/register', authHandler.register)
 app.post(url + '/login', authHandler.login)
 
 app.listen(8006, (err) => {

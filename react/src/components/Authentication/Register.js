@@ -1,50 +1,141 @@
 import React from 'react'
 import '../../assets/styles/inputs-shared.css'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 
-const Register = () => {
-    return (
-        <React.Fragment>
-     <div className="box" id="register">
-                    <form>
-                        <p className="input-container">
-                                <label className="text-field-input" id="first-name-label" for="first-name">First Name</label>
-                                <input className="text-field" type="text" name="first-name" id="first-name"/>
-                        </p>
-                        <p className="input-container">
-                                <label className="text-field-input" for="last-name">Last Name</label>
-                                <input className="text-field" type="text" name="last-name" id="last-name"/>
-                        </p>
-                        <p className="input-container">
-                                <label className="text-field-input" for="email">E-mail</label>
-                                <input className="text-field" type="email" name="email" id="email"/>
-                        </p>
-                        <p className="input-container">
-                                <label className="text-field-input" for="date-of-birth">Date of Birth</label>
-                                <input className="text-field" type="text" name="date-of-birth" id="date-of-birth"/>
-                        </p>
-                        <p className="input-container">
-                                <label className="text-field-input" for="telephone">Telephone</label>
-                                <input className="text-field" type="text" name="telephone" id="telephone"/>
-                        </p>
-                        <p className="input-container">
-                                <label className="text-field-input" for="country">Country</label>
-                                <input className="text-field" type="text" name="country" id="country"/>
-                        </p>
-                        <p className="input-container">
-                                <label className="text-field-input" for="password">Password</label>
-                                <input className="text-field" type="password" name="password" id="password"/>
-                        </p>
-                        <button className="primary-btn" type="submit">Register</button>
-                    </form>
-                </div>
+class Register extends React.Component {
+        constructor(props) {
+                super(props)
+                this.state = {
+                        first_name: null,
+                        last_name: null,
+                        email: null,
+                        date_of_birth: null,
+                        telephone: null,
+                        country: null,
+                        password: null
+                }
+        }
+        saveUserToState = (event) => {
+                this.setState({ [event.target.name]: event.target.value });
+        }
 
-    
-            <div className="textDiv">
-                <p>Or if you already have an account, <Link className="additional-info" to="/">Sign in</Link></p>
-            </div>
-        </React.Fragment>
-    )
+        saveUser = () => {
+                axios.post('http://127.0.0.1:8006/app/v1/register', {
+                        first_name: this.state.first_name,
+                        last_name: this.state.last_name,
+                        email: this.state.email,
+                        password: this.state.password,
+                        date_of_birth: this.state.date_of_birth,
+                        telephone: this.state.telephone,
+                        country: this.state.country,
+                        _created: new Date(),
+                })
+                        .then(res => {
+                                console.log(res);
+                        })
+                        .catch(err => {
+                                console.log(err)
+                        })
+        }
+        // saveUser = () => {
+        //         if(this.state.first_name === null ||
+        //                 this.state.last_name === null ||
+        //                 this.state.email === null ||
+        //                 this.state.password === null ||
+        //                 this.state.birthday === null ||
+        //                 this.state.telephone === null ||
+        //                 this.state.country === null ){
+        //                     event.preventDefault()
+        //                     alert('Please fill out all the fields')
+        //             } 
+        //             else if (this.state.first_name != null &&
+        //                 this.state.last_name != null &&
+        //                 this.state.email != null &&
+        //                 this.state.password != null &&
+        //                 this.state.birthday != null &&
+        //                 this.state.telephone != null &&
+        //                 this.state.country != null) {
+        //                 event.preventDefault()
+        //                 axios.post('http://localhost:8081/api/v1/register', {
+        //                     first_name: this.state.first_name,
+        //                     last_name: this.state.last_name,
+        //                     email: this.state.email,
+        //                     password: this.state.password,
+        //                     birthday: this.state.birthday,
+        //                     telephone: this.state.telephone,
+        //                     country: this.state.country,
+        //                     _created: new Date(),
+        //                 })
+        //                 .then(res => {
+        //                     console.log(res)
+        //                     axios.post('http://localhost:8081/api/v1/login', {
+        //                         email: this.state.email,
+        //                         password: this.state.password
+        //                     })
+        //                     .then(res=>{
+        //                         localStorage.setItem('jwt', res.data.jwt);
+        //                         localStorage.setItem('name', this.state.first_name);
+        //                         localStorage.setItem('lastName', this.state.last_name);
+        //                         this.setState({redirect: true});
+        //                         // this.props.history.push('/products')
+        //                     })
+        //                     .catch(err=>{
+        //                         console.log(err)
+        //                     })
+        //                 })
+        //                 .catch(err=>{
+        //                     console.log(err)
+        //                 });
+        //             }
+        // }
+
+        render() {
+
+                return (
+                        <React.Fragment>
+                                <div className="box" id="register">
+                                        <form>
+                                                <p className="input-container">
+                                                        <label className="text-field-input" id="first-name-label" htmlFor="first_name">First Name</label>
+                                                        <input onChange={this.saveUserToState} className="text-field" type="text" name="first_name" id="first_name" />
+                                                </p>
+                                                <p className="input-container">
+                                                        <label className="text-field-input" htmlFor="last_name">Last Name</label>
+                                                        <input onChange={this.saveUserToState} className="text-field" type="text" name="last_name" id="last_name" />
+                                                </p>
+                                                <p className="input-container">
+                                                        <label className="text-field-input" htmlFor="email">E-mail</label>
+                                                        <input onChange={this.saveUserToState} className="text-field" type="email" name="email" id="email" />
+                                                </p>
+                                                <p className="input-container">
+                                                        <label className="text-field-input" htmlFor="date_of_birth">Date of Birth</label>
+                                                        <input onChange={this.saveUserToState} className="text-field" type="text" name="date_of_birth" id="date_of_birth" />
+                                                </p>
+                                                <p className="input-container">
+                                                        <label className="text-field-input" htmlFor="telephone">Telephone</label>
+                                                        <input onChange={this.saveUserToState} className="text-field" type="text" name="telephone" id="telephone" />
+                                                </p>
+                                                <p className="input-container">
+                                                        <label className="text-field-input" htmlFor="country">Country</label>
+                                                        <input onChange={this.saveUserToState} className="text-field" type="text" name="country" id="country" />
+                                                </p>
+                                                <p className="input-container">
+                                                        <label className="text-field-input" htmlFor="password">Password</label>
+                                                        <input onChange={this.saveUserToState} className="text-field" type="password" name="password" id="password" />
+                                                </p>
+                                                <button className="primary-btn" type="submit" onClick={this.saveUser}>Register</button>
+                                        </form>
+                                </div>
+
+
+                                <div className="textDiv">
+                                        <p>Or if you already have an account, <Link className="additional-info" to="/">Sign in</Link></p>
+                                </div>
+                        </React.Fragment>
+                )
+
+        }
 }
 
 export default Register

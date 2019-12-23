@@ -48,18 +48,18 @@ html, body {
     font-weight: 600;
 }
 
-#monthly-btn {
-    background: #1DD1A1;
-    color: #fff;
-    font-size: 15px;
-    text-transform: uppercase;
-}
-#yearly-btn {
+.select-btn {
     background: #C9E5DD;
     color: #fff;
     font-size: 15px;
     text-transform: uppercase;
 }
+
+.active-btn {
+    background: #1DD1A1;
+}
+
+
 .select-div{
     display: flex;
     align-items: center;

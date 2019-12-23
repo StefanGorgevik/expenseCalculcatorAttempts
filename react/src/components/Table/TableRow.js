@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Link } from 'react-router-dom'
 
-const tableTools = (props) => {
+const tableRow = (props) => {
     return (
         <tr id="first-tr" className="body-tr">
             <td>{props.name}</td>
@@ -12,7 +12,7 @@ const tableTools = (props) => {
             <td>{props.price}</td>
             <td>
                 <Link to="/edit-product">
-                    <button id="edit-button" ><i className="far fa-edit"></i></button>
+                    <button id="edit-button" onClick={props.editProduct} ><i className="far fa-edit"></i></button>
                 </Link>
                 <button onClick={props.deleteProduct} id="delete-button"><i className="far fa-trash-alt"></i></button>
             </td>
@@ -20,4 +20,4 @@ const tableTools = (props) => {
     )
 }
 
-export default tableTools;
+export default tableRow;

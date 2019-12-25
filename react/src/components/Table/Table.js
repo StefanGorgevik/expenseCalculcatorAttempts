@@ -34,6 +34,15 @@ class Table extends React.Component {
                 console.log(err);
             })
     }
+    componentDidUpdate() {
+        axios.get("http://localhost:8005/app/v1/products")
+            .then(res => {
+                store.dispatch(getProducts(res.data));       
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
 
 
     hideAlert = () => {
@@ -48,20 +57,22 @@ class Table extends React.Component {
     }
 
     deleteProduct = (product, productID) => {
-        this.setState({ alertShow: true })
-        this.setState({ product: product })
+        this.setState({ alertShow: false })
+        
         axios.delete(`http://localhost:8005/app/v1/products/${productID}`)
             .then(res => {
                 console.log(res)
+                store.dispatch(deleteProduct(product))
             })
             .catch(err => {
                 console.log(err)
             })
     }
 
-    deleteProductHandler = () => {
-        this.setState({ alertShow: false })
-        store.dispatch(deleteProduct(this.state.product))
+    deleteProductHandler = (product) => {
+        this.setState({ product: product })
+        this.setState({ alertShow: true })
+
     }
 
     render() {
@@ -69,7 +80,8 @@ class Table extends React.Component {
         if (this.props.products) {
             tableRow = this.props.products.map(product => {
                 return (<TableRow key={product._id} name={product.name}
-                    deleteProduct={() => this.deleteProduct(product, product._id)}
+                    //deleteProduct={() => this.deleteProduct(product, product._id)}
+                    deleteProduct={() => this.deleteProductHandler(product)}
                     editProduct={() => this.editProduct(product)}
                     type={product.type}
                     description={product.description}
@@ -82,7 +94,8 @@ class Table extends React.Component {
         let alert = null;
         if (this.state.alertShow) {
             alert = <Alert hide={this.hideAlert}
-                delete={this.deleteProductHandler}
+                //delete={this.deleteProductHandler}
+                delete={() => this.deleteProduct(this.state.product, this.state.product._id)}
             />
         }
 

@@ -23,6 +23,16 @@ class Products extends React.Component {
             })
     }
 
+    componentDidUpdate() {
+        axios.get("http://localhost:8005/app/v1/products")
+            .then(res => {
+                store.dispatch(getProducts(res.data));
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
+
     newProductHandler = () => {
         const clicked = !this.state.clicked
         store.dispatch(editProductClicked(clicked))

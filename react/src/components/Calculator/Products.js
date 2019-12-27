@@ -3,7 +3,7 @@ import './Products.css'
 import { Link } from 'react-router-dom'
 
 import store from '../../redux/store'
-import { getProducts, editProductClicked } from '../../redux/actions/productAction'
+import { getProducts, editProductClicked, getTotalPrice } from '../../redux/actions/productAction'
 import axios from 'axios'
 class Products extends React.Component {
     constructor(props) {
@@ -13,17 +13,10 @@ class Products extends React.Component {
         }
     }
 
-    componentDidMount() {
-        axios.get("http://localhost:8005/app/v1/products")
-            .then(res => {
-                store.dispatch(getProducts(res.data));
-            })
-            .catch(err => {
-                console.log(err);
-            })
-    }
+   
 
     componentDidUpdate() {
+        console.log(`Comp did UPDATE in products`)
         axios.get("http://localhost:8005/app/v1/products")
             .then(res => {
                 store.dispatch(getProducts(res.data));

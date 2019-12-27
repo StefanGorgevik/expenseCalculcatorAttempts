@@ -1,6 +1,8 @@
 import React from 'react'
-
 import { Link } from 'react-router-dom'
+
+import { connect } from 'react-redux'
+import TableTools from './TableTools'
 
 const tableRow = (props) => {
     return (
@@ -10,14 +12,18 @@ const tableRow = (props) => {
             <td>{props.description}</td>
             <td>{props.date}</td>
             <td>{props.price}</td>
-            <td>
-                <Link to="/edit-product">
-                    <button id="edit-button" onClick={props.editProduct} ><i className="far fa-edit"></i></button>
-                </Link>
-                <button onClick={props.deleteProduct} id="delete-button"><i className="far fa-trash-alt"></i></button>
-            </td>
+            {props.expensesClicked ? 
+                null : <props.tableTools editProduct={props.editProduct} deleteProduct={props.deleteProduct}/>}
         </tr>
     )
 }
 
-export default tableRow;
+function mapStateToProps(state) {
+    return ({
+        expensesClicked: state.expensesClicked
+    }
+    )
+}
+
+
+export default connect(mapStateToProps)(tableRow);

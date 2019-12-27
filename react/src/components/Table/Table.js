@@ -2,10 +2,11 @@ import React from 'react'
 import './Table.css'
 import Alert from '../Alert/Alert'
 import TableRow from './TableRow'
+import TableTools from './TableTools'
 import { connect } from 'react-redux'
 import store from '../../redux/store'
 
-import { deleteProduct, getProducts, getTotalPrice, editProduct, editProductClicked } from '../../redux/actions/productAction'
+import { deleteProduct, getProducts, editProduct, editProductClicked, getTotalPrice, expensesClicked } from '../../redux/actions/productAction'
 import axios from 'axios'
 
 
@@ -20,6 +21,7 @@ class Table extends React.Component {
     }
 
     componentDidMount() {
+        console.log(`Comp did mount in Table`)
         axios.get("http://localhost:8005/app/v1/products")
             .then(res => {
                 store.dispatch(getProducts(res.data));
@@ -28,7 +30,6 @@ class Table extends React.Component {
                     totalPrice += parseInt(res.data[i].price)
                 }
                 store.dispatch(getTotalPrice(totalPrice));
-                
             })
             .catch(err => {
                 console.log(err);
@@ -87,6 +88,7 @@ class Table extends React.Component {
                     description={product.description}
                     date={product.date}
                     price={product.price}
+                    tableTools={TableTools}
                 />)
             })
         }
@@ -111,7 +113,7 @@ class Table extends React.Component {
                                 <th>Product Description</th>
                                 <th>Purchase Date</th>
                                 <th>Product Price</th>
-                                <th>Product Options</th>
+                                {this.props.expensesClicked ? null :<th>Product Options</th>}
                             </tr>
 
                         </thead>
@@ -120,6 +122,7 @@ class Table extends React.Component {
                                 <td id="emptyTd"></td>
                             </tr>
                             {tableRow}
+                        
                         </tbody>
                     </table>
                 </main>
@@ -131,7 +134,8 @@ class Table extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        products: state.products
+        products: state.products,
+        expensesClicked: state.expensesClicked
     }
 }
 

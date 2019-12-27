@@ -50,8 +50,6 @@ class NewProduct extends React.Component {
                 alert('Please fill the fields!')
                 event.preventDefault()
         } else {
-
-            event.preventDefault()
             axios.put(`http://localhost:8005/app/v1/products/${this.props.productToEdit._id}`, {
                 name: this.state.name,
                 type: this.state.type,
@@ -99,7 +97,7 @@ class NewProduct extends React.Component {
                                     <label className="text-field-input" htmlFor="date">Product Date</label>
                                     <input defaultValue={this.props.editProductClicked ? this.props.productToEdit.date : ''}
                                         onChange={this.saveProduct}
-                                        className="text-field" type="text" name="date" id="date" />
+                                        className="text-field" type="date" name="date" id="date" />
                                 </p>
                                 <p className="input-container">
                                     <label className="text-field-input" htmlFor="price">Product Price</label>

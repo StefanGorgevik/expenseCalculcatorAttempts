@@ -2,20 +2,28 @@ import React from 'react'
 import './Header.css'
 import { Link } from 'react-router-dom'
 
+import { expensesClicked } from '../../redux/actions/productAction'
+import store from '../../redux/store'
+
 class Header extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            active: true
+            active: true,
+            expensesClicked: false
         }
     }
 
     expensesClicked = () => {
-        this.setState({active: false})
+        this.setState({ active: false })
+        const clicked = !this.state.expensesClicked
+        store.dispatch(expensesClicked(clicked))
     }
 
     productsClicked = () => {
-        this.setState({active: true})
+        this.setState({ active: true, expensesClicked: false })
+        const clicked = this.state.expensesClicked
+        store.dispatch(expensesClicked(clicked))
     }
 
     render() {

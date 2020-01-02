@@ -1,7 +1,32 @@
 const productModel = require('../models/products')
 
 const getAllProducts = (req, res) => {
-    productModel.getAllProducts()
+    let q = {};
+    q.userID = req.user.id;
+    let sort = {};
+
+    if(req.query.date_from != undefined) {
+        if(q.date == undefined){
+            q.date = {};
+        }
+        q.date.$gte = new Date(Number(req.query.date_from));
+    }
+
+    if(req.query.date_to != undefined) {
+        if(q.date == undefined){
+            q.date = {};
+        }
+        q.date.$lte = new Date(Number(req.query.date_to));
+    }
+
+    if(req.query.sort != undefined) {
+        let sortable = ['date', 'price'];
+        let sq = req.query.sort.split(':');
+        if(sortable.indexOf(sq[0]) > -1){
+            sort[sq[0]] = sq[1] == 'desc' ? -1 : 1;
+        }
+    }
+    productModel.getAllProducts(q, sort)
         .then(data => {
             res.status(200).send(data);
         })
@@ -11,7 +36,7 @@ const getAllProducts = (req, res) => {
 }
 
 const getOne = (req, res) => {
-    productModel.getOne(req.params.id)
+    productModel.getOne(req.params.id, req.user.id)
         .then(data => {
             res.status(200).send(data)
         })
@@ -29,7 +54,7 @@ const saveProduct = (req, res) => {
     if (newProduct.date == undefined || newProduct.date.length == 0) { errors++ };
     if (newProduct.price == undefined || newProduct.price.length == 0) { errors++ };
     if (errors == 0) {
-        productModel.saveProduct(newProduct)
+        productModel.saveProduct({...newProduct, userID: req.user.id})
             .then(() => {
                 res.status(201).send("Created");
             })

@@ -1,4 +1,5 @@
 export const getProducts = (data) => {
+    console.log('!!!!!! getProducts !!!!!!!!!!!!!!!!!!!!!!!!!!')
     return {
         type: 'GET_PRODUCTS',
         payload: data
@@ -44,6 +45,13 @@ export const expensesClicked = (expensesClicked) => {
     return {
         type: "EXPENSES_CLICKED",
         expensesClicked
+    }
+}
+
+export const tableUpdated = (tableUpdated) => {
+    return {
+        type: "TABLE_UPDATED",
+        tableUpdated
     }
 }
 

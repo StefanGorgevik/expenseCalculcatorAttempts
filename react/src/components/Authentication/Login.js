@@ -15,36 +15,40 @@ class Login extends React.Component {
     }
 
     saveLoginData = (event) => {
-        this.setState({[event.target.id]: event.target.value})
+        this.setState({ [event.target.id]: event.target.value })
     }
 
     redirectToMain = () => {
-        if(this.state.signed) {
+        if (this.state.signed) {
             return <Redirect to='/products' />
         }
     }
 
     signIn = (event) => {
         event.preventDefault();
-        axios.post('http://127.0.0.1:8006/app/v1/login', {
-            email: this.state.email,
-            password: this.state.password
-        })
-        .then(res=>{
-            console.log("Logged in")
-            localStorage.setItem('jwt', res.data.jwt);
-            this.setState({signed:true})
-        })  
-        .catch(err=>{
-            console.log(err)
-        });
+        axios.post('http://127.0.0.1:8006/app/v1/login',
+            {
+                email: this.state.email,
+                password: this.state.password
+            })
+            .then(res => {
+                console.log("Logged in")
+                console.log(res)
+                localStorage.setItem('jwt', res.data.jwt);
+                localStorage.setItem('first_name', res.data.first_name);
+                localStorage.setItem('last_name', res.data.last_name);
+                this.setState({ signed: true })
+            })
+            .catch(err => {
+                console.log(err)
+            });
     }
 
 
     render() {
         return (
             <React.Fragment>
-            {this.redirectToMain()}
+                {this.redirectToMain()}
                 <main>
                     <div className="box" id="login">
                         <form>

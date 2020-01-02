@@ -1,34 +1,46 @@
 import React from 'react'
 import './Products.css'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 
 import store from '../../redux/store'
-import { getProducts, editProductClicked, getTotalPrice } from '../../redux/actions/productAction'
-import axios from 'axios'
+import { editProductClicked, getProducts } from '../../redux/actions/productAction'
 class Products extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            clicked: true
+            clicked: false,
+            filterOption: null
         }
     }
 
-   
-
     componentDidUpdate() {
-        console.log(`Comp did UPDATE in products`)
-        axios.get("http://localhost:8005/app/v1/products")
-            .then(res => {
-                store.dispatch(getProducts(res.data));
-            })
-            .catch(err => {
-                console.log(err);
-            })
+        if(this.state.filterOption !== null) {
+            axios.get(`http://localhost:8005/app/v1/products?sort=${this.state.filterOption}`,
+                {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('jwt')}`
+                    }
+                }
+            )
+                .then(res => {
+                    store.dispatch(getProducts(res.data));
+
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+        }
     }
 
     newProductHandler = () => {
-        const clicked = !this.state.clicked
-        store.dispatch(editProductClicked(clicked))
+        this.setState({clicked: true})
+        store.dispatch(editProductClicked(this.state.clicked))
+    }
+
+    filterHandler = (event) => {
+        this.setState({ filterOption: event.target.value })
+
     }
 
     render() {
@@ -38,11 +50,11 @@ class Products extends React.Component {
                 <div className="main-div">
                     <h3>Products</h3>
                     <label htmlFor="sort">Filter by:
-                <select name="sort" id="sort">
-                            <option>Year</option>
-                            <option>Highest Price</option>
-                            <option>Lowest Price</option>
-                            <option>Latest Purchases</option>
+                <select name="filterOption" id="sort" onChange={this.filterHandler}>
+                            <option value="date:desc">Last Purchase</option>
+                            <option value="date:asc">First Purchase</option>
+                            <option value="price:desc">Highest Price</option>
+                            <option value="price:asc">Lowest Price</option>
                         </select>
                     </label>
                 </div>

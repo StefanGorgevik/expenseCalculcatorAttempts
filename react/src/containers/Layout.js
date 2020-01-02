@@ -18,8 +18,8 @@ class Layout extends Component {
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/products" render={() =><Products header={Header} table={Table}/>} />
                 <Route exact path="/expenses" render={() => <Expenses header={Header} table={Table}/>} />
-                <Route exact path="/new-product" component={ NewProduct } />
-                <Route exact path="/edit-product" render={() => <NewProduct />} />
+                <Route exact path="/new-product" render={() => <NewProduct header={Header} />} />
+                <Route exact path="/edit-product" render={() => <NewProduct header={Header} />} />
             </Switch>
         </Router>
         )

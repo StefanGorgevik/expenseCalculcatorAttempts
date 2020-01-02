@@ -15,14 +15,15 @@ const cors = require('cors');
 app.use(cors())
 
 //jwt tokens
-// app.use(                                                       //sekoj req ke pomine niz ova i ke vrati req.user
-//     jwt(
-//         { secret: config.getConfig('jwt').key }
-//     )
-//         .unless(
-//             { path: ['/app/v1/register', '/app/v1/login'] }
-//         )
-// );
+var jwt = require('express-jwt');
+app.use(                                                       //sekoj req ke pomine niz ova i ke vrati req.user
+    jwt(
+        { secret: config.getConfig('jwt').key }
+    )
+        .unless(
+            { path: ['/app/v1/register', '/app/v1/login'] }
+        )
+);
 
 //routes
 const authHandler = require('../handlers/authHandler')

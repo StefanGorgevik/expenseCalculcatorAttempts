@@ -10,7 +10,7 @@ const tableRow = (props) => {
             <td>{props.name}</td>
             <td>{props.type}</td>
             <td>{props.description}</td>
-            <td>{props.date}</td>
+            <td>{props.date.toString().slice(0, 10)}</td>
             <td>{props.price}</td>
             {props.expensesClicked ? 
                 null : <props.tableTools editProduct={props.editProduct} deleteProduct={props.deleteProduct}/>}

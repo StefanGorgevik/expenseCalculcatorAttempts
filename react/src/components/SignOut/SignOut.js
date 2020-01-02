@@ -1,23 +1,25 @@
 import React from 'react'
 import '../../assets/styles/Pop-up.css'
 
-const alert = (props) => {
+const signOut = (props) => {
+
+
     return (
         <div id="alert">
         <div id="alert-container">
             <div id="alert-text-container">
-                <h1>Delete Product</h1>
-                <p>You are about to delete this product. Are you sure you wish to continue ?</p>
+                <h1>You are signing out</h1>
+                <p>You are about to sign out. Are you sure ?</p>
             </div>
             <div id="alert-buttons">
                 <button className="alert-btn" id="cancel-alert-btn" onClick={props.hide}
                 >CANCEL</button>
-                <button className="alert-btn" id="delete-alert-btn" onClick={props.delete}
-                >DELETE</button>
+                <button className="alert-btn" id="delete-alert-btn" onClick={props.signOutAccepted}
+                >SIGN OUT</button>
             </div>
         </div>
     </div>
     )
 }
 
-export default alert;
+export default signOut;

@@ -15,6 +15,14 @@ const productHandler = require('../handlers/products')
 const cors = require('cors');
 app.use(cors())
 
+//jwt tokens
+var jwt = require('express-jwt');
+app.use(                                                       //sekoj req ke pomine niz ova i ke vrati req.user
+    jwt(
+        { secret: config.getConfig('jwt').key }
+    )
+);
+
 //routes and methods
 const url = '/app/v1/products'
 app.get(url, productHandler.getAllProducts);

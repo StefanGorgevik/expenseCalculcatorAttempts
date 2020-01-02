@@ -6,15 +6,16 @@ const Product = mongoose.model(
         type: String,
         description: String,
         date: Date,
-        price: String, 
+        price: Number, 
+        userID: String,
         _created: Date,
         _modified: Date
     })
 )
 
-const getAllProducts = () => {
+const getAllProducts = (q, sort) => {
     return new Promise((success, fail) => {
-        Product.find({}, (err, data) => {
+        Product.find(q, {}, {sort: sort}, (err, data) => {
             if (err) {
                 return fail(err);
             }
@@ -23,9 +24,9 @@ const getAllProducts = () => {
     })
 }
 
-const getOne = (id) => {
+const getOne = (id, userID) => {
     return new Promise((success, fail) => {
-        Product.find({ _id: id }, (err, data) => {
+        Product.find({ _id: id, userID: userID }, (err, data) => {
             if (err) {
                 return fail(err);
             }

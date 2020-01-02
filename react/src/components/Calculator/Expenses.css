@@ -65,22 +65,36 @@ html, body {
     align-items: center;
     width: 25%;
 }
-.select-div label {
-    width: 30%;
-    padding-left: 30px;
-    font-family: 'Roboto', sans-serif;
-    
+.yearMonthly-div{
+    display: flex;
+    align-items: center;
+    width: 60%;
 }
-#month-select {
+.yearMonthly-div label {
+    width: 20%;
+    font-family: 'Roboto', sans-serif;
+}
+.select-div label {
+    width: 40%;
+    padding-left: 50px;
+    padding-left: 20px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.month-select {
     height: 35px;
     background: #fff; 
     border: 2px solid #C6C6C6;
-    width: 35%;
+    width: 40%;
     color:  #8D8D8D;
     font-size: 16px;
     border-radius: 5px;
 }
-#month-select option {
+
+.select-box{
+    width: 50%
+}
+.month-select option {
     padding: 50px;
 }
 .transparent-div {

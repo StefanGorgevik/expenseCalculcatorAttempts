@@ -6,7 +6,7 @@ import TableTools from './TableTools'
 import { connect } from 'react-redux'
 import store from '../../redux/store'
 
-import { deleteProduct, getProducts, editProduct, editProductClicked, getTotalPrice, expensesClicked } from '../../redux/actions/productAction'
+import { deleteProduct, getProducts, editProduct, editProductClicked, getTotalPrice, tableUpdated } from '../../redux/actions/productAction'
 import axios from 'axios'
 
 
@@ -21,8 +21,13 @@ class Table extends React.Component {
     }
 
     componentDidMount() {
-        console.log(`Comp did mount in Table`)
-        axios.get("http://localhost:8005/app/v1/products")
+        console.log(`!!!!Comp did MOUNT in Table!!!!`)
+        axios.get("http://localhost:8005/app/v1/products?sort=date:desc",
+            {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('jwt')}`
+                }
+            })
             .then(res => {
                 store.dispatch(getProducts(res.data));
                 let totalPrice = 0;
@@ -35,14 +40,26 @@ class Table extends React.Component {
                 console.log(err);
             })
     }
+
     componentDidUpdate() {
-        axios.get("http://localhost:8005/app/v1/products")
-            .then(res => {
-                store.dispatch(getProducts(res.data));       
-            })
-            .catch(err => {
-                console.log(err);
-            })
+        if (this.props.tableUpdated) {
+                console.log(`!!!!!!Comp did UPDATE in Table !!!!`)
+                axios.get("http://localhost:8005/app/v1/products?sort=date:desc",
+                    {
+                        headers: {
+                            'Authorization': `Bearer ${localStorage.getItem('jwt')}`
+                        }
+                    }
+                )
+                    .then(res => {
+                        store.dispatch(getProducts(res.data));
+                        store.dispatch(tableUpdated(false));
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
+               
+        }
     }
 
 
@@ -59,8 +76,12 @@ class Table extends React.Component {
 
     deleteProduct = (product, productID) => {
         this.setState({ alertShow: false })
-        
-        axios.delete(`http://localhost:8005/app/v1/products/${productID}`)
+        axios.delete(`http://localhost:8005/app/v1/products/${productID}`,
+            {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('jwt')}`
+                }
+            })
             .then(res => {
                 console.log(res)
                 store.dispatch(deleteProduct(product))
@@ -81,7 +102,6 @@ class Table extends React.Component {
         if (this.props.products) {
             tableRow = this.props.products.map(product => {
                 return (<TableRow key={product._id} name={product.name}
-                    //deleteProduct={() => this.deleteProduct(product, product._id)}
                     deleteProduct={() => this.deleteProductHandler(product)}
                     editProduct={() => this.editProduct(product)}
                     type={product.type}
@@ -96,13 +116,10 @@ class Table extends React.Component {
         let alert = null;
         if (this.state.alertShow) {
             alert = <Alert hide={this.hideAlert}
-                //delete={this.deleteProductHandler}
                 delete={() => this.deleteProduct(this.state.product, this.state.product._id)}
             />
         }
-
         return (
-
             <React.Fragment>
                 <main className="main-box">
                     <table className="Table">
@@ -113,7 +130,7 @@ class Table extends React.Component {
                                 <th>Product Description</th>
                                 <th>Purchase Date</th>
                                 <th>Product Price</th>
-                                {this.props.expensesClicked ? null :<th>Product Options</th>}
+                                {this.props.expensesClicked ? null : <th>Product Options</th>}
                             </tr>
 
                         </thead>
@@ -122,7 +139,6 @@ class Table extends React.Component {
                                 <td id="emptyTd"></td>
                             </tr>
                             {tableRow}
-                        
                         </tbody>
                     </table>
                 </main>
@@ -135,7 +151,8 @@ class Table extends React.Component {
 function mapStateToProps(state) {
     return {
         products: state.products,
-        expensesClicked: state.expensesClicked
+        expensesClicked: state.expensesClicked,
+        tableUpdated: state.tableUpdated
     }
 }
 

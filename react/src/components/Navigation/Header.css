@@ -38,10 +38,8 @@ button {
     background:transparent;
 }
 .active-btn {
-    background: transparent;
-    border: 1.5px solid #576574;
+    border-color: #576574;
     color: #576574;
-    height: 50px;
 }
 
 span,p {
@@ -54,6 +52,11 @@ span,p {
     justify-content: flex-end;
     margin-right: 200px;
     align-items: center;
+}
+
+.right-side a {
+    text-decoration: none;
+    color: inherit;
 }
 
 #profile-image {

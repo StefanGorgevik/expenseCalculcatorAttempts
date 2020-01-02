@@ -3,7 +3,8 @@ const initState = {
     totalPrice: '',
     productToEdit: '',
     editProductClicked: '',
-    expensesClicked: false
+    expensesClicked: false,
+    tableUpdated: false
 }
 
 export function productReducer(state = initState, action) {
@@ -37,6 +38,9 @@ export function productReducer(state = initState, action) {
         }
         case "EXPENSES_CLICKED": {
             return { ...state, expensesClicked: action.expensesClicked }
+        }
+        case "TABLE_UPDATED": {
+            return { ...state, tableUpdated: action.tableUpdated }
         }
         default:
             return state

@@ -24,28 +24,36 @@ class NewProduct extends React.Component {
     }
 
     createProduct = (event) => {
-        store.dispatch(saveProductAction(this.state))
+        console.log(this.state)
         if (this.state.name == '' || this.state.type == '' ||
             this.state.description == '' || this.state.date == '' || this.state.price == '') {
             event.preventDefault();
             alert('Fill out the fields correctly!')
         } else if (this.state.name !== '' || this.state.type !== '' ||
             this.state.description !== '' || this.state.date !== '' || this.state.price !== '') {
-            store.dispatch(tableUpdated(!this.state.tableUpdated))
-            axios.post('http://localhost:8005/app/v1/products',
-                {
+            const newProduct = {
                 name: this.state.name,
                 type: this.state.type,
                 description: this.state.description,
                 date: this.state.date,
-                price: this.state.price,
-                _created: new Date()
-            },
-            {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('jwt')}`
-                }
+                price: this.state.price
             }
+            store.dispatch(saveProductAction(newProduct))
+            store.dispatch(tableUpdated(!this.state.tableUpdated))
+            axios.post('http://localhost:8005/app/v1/products',
+                {
+                    name: this.state.name,
+                    type: this.state.type,
+                    description: this.state.description,
+                    date: this.state.date,
+                    price: this.state.price,
+                    _created: new Date()
+                },
+                {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('jwt')}`
+                    }
+                }
             )
                 .then(res => console.log(res))
                 .catch(err => console.log(err.response))
@@ -68,10 +76,10 @@ class NewProduct extends React.Component {
                     price: this.state.price,
                     _modified: new Date()
                 }, {
-                    headers: {
-                        'Authorization': `Bearer ${localStorage.getItem('jwt')}`
-                    }
-                })
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('jwt')}`
+                }
+            })
                 .then(res => {
                     console.log(res)
                 })

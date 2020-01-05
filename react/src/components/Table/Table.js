@@ -9,7 +9,6 @@ import store from '../../redux/store'
 import { deleteProduct, getProducts, editProduct, editProductClicked, getTotalPrice, tableUpdated } from '../../redux/actions/productAction'
 import axios from 'axios'
 
-
 class Table extends React.Component {
     constructor(props) {
         super(props);
@@ -22,23 +21,25 @@ class Table extends React.Component {
 
     componentDidMount() {
         console.log(`!!!!Comp did MOUNT in Table!!!!`)
-        axios.get("http://localhost:8005/app/v1/products?sort=date:desc",
-            {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('jwt')}`
-                }
-            })
-            .then(res => {
-                store.dispatch(getProducts(res.data));
-                let totalPrice = 0;
-                for (let i = 0; i < res.data.length; i++) {
-                    totalPrice += parseInt(res.data[i].price)
-                }
-                store.dispatch(getTotalPrice(totalPrice));
-            })
-            .catch(err => {
-                console.log(err);
-            })
+        if(this.props.products) {
+            axios.get("http://localhost:8005/app/v1/products?sort=date:desc",
+                {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('jwt')}`
+                    }
+                })
+                .then(res => {
+                    store.dispatch(getProducts(res.data));
+                    let totalPrice = 0;
+                    for (let i = 0; i < res.data.length; i++) {
+                        totalPrice += parseInt(res.data[i].price)
+                    }
+                    store.dispatch(getTotalPrice(totalPrice));
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+        }
     }
 
     componentDidUpdate() {
@@ -61,7 +62,6 @@ class Table extends React.Component {
                
         }
     }
-
 
     hideAlert = () => {
         this.setState({ alertShow: false })
@@ -101,7 +101,7 @@ class Table extends React.Component {
         let tableRow = null;
         if (this.props.products) {
             tableRow = this.props.products.map(product => {
-                return (<TableRow key={product._id} name={product.name}
+                return (<TableRow key={product.name + Math.random()} name={product.name}
                     deleteProduct={() => this.deleteProductHandler(product)}
                     editProduct={() => this.editProduct(product)}
                     type={product.type}

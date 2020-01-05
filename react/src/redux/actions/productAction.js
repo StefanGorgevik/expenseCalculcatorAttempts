@@ -5,12 +5,6 @@ export const getProducts = (data) => {
         payload: data
     }
 }
-export const saveProductAction = (data) => {
-    return {
-        type: 'SAVE_PRODUCT',
-        payload: data
-    }
-}
 
 export const deleteProduct = (product) => {
     return {

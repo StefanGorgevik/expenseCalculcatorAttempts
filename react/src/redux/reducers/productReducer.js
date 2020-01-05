@@ -14,11 +14,6 @@ export function productReducer(state = initState, action) {
                 ...state, products: action.payload
             }
         }
-        case "SAVE_PRODUCT": {
-            return {
-                ...state, products: [...state.products, action.payload]
-            }
-        }
         case "DELETE_PRODUCT": {
             let newProducts = state.products.filter(product => {
                 return action.payload._id !== product._id

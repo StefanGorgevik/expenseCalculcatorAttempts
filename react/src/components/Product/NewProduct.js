@@ -1,7 +1,7 @@
 import React from 'react'
 import './New-product.css'
 
-import { saveProductAction, tableUpdated } from '../../redux/actions/productAction'
+import { tableUpdated } from '../../redux/actions/productAction'
 import store from '../../redux/store'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -30,15 +30,7 @@ class NewProduct extends React.Component {
             event.preventDefault();
             alert('Fill out the fields correctly!')
         } else if (this.state.name !== '' || this.state.type !== '' ||
-            this.state.description !== '' || this.state.date !== '' || this.state.price !== '') {
-            const newProduct = {
-                name: this.state.name,
-                type: this.state.type,
-                description: this.state.description,
-                date: this.state.date,
-                price: this.state.price
-            }
-            store.dispatch(saveProductAction(newProduct))
+            this.state.description !== '' || this.state.date !== '' || this.state.price !== '') {   
             store.dispatch(tableUpdated(!this.state.tableUpdated))
             axios.post('http://localhost:8005/app/v1/products',
                 {

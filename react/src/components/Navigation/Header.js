@@ -12,7 +12,7 @@ class Header extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            active: true,
+            active: false,
             expensesClicked: false,
             signOut: false,
             signOutClicked: false
@@ -20,13 +20,13 @@ class Header extends React.Component {
     }
 
     expensesClicked = () => {
-        this.setState({ active: false })
+        this.setState({ active: !this.state.active })
         const clicked = !this.state.expensesClicked
         store.dispatch(expensesClicked(clicked))
     }
 
     productsClicked = () => {
-        this.setState({ active: true, expensesClicked: false })
+        this.setState({ active: !this.state.active, expensesClicked: false })
         const clicked = this.state.expensesClicked
         store.dispatch(expensesClicked(clicked))
     }
@@ -52,12 +52,13 @@ class Header extends React.Component {
                 <header>
                     <nav className="nav">
                         <div className="buttons">
-                            <Link to='/products'><button className={this.state.active ? 'main-buttons active-btn' : 'main-buttons'} onClick={this.productsClicked}>Products</button></Link>
-                            <Link to="/expenses"><button className={!this.state.active ? 'main-buttons active-btn' : 'main-buttons'} onClick={this.expensesClicked}>Expenses</button></Link>
+                            <Link to='/products'><button className={!this.state.active ? 'active-btn main-buttons' : 'main-buttons'} onClick={this.productsClicked}>Products</button></Link>
+                            <Link to='/expenses'><button className={this.state.active ? 'active-btn main-buttons' : 'main-buttons'} onClick={this.expensesClicked}>Expenses</button></Link>
                         </div>
                         <div className="right-side">
                             <img id="profile-image" src="../../assets/images/small_profile.png" alt="profile-image" />
                             <p><Link to="#" onClick={this.signOutClicked}>{localStorage.getItem('first_name') + ' ' + localStorage.getItem('last_name')}</Link></p>
+                            <p className="sign-out"><Link to='#' onClick={this.signOutClicked}>Sign Out</Link></p>
                         </div>
                     </nav>
                 </header>

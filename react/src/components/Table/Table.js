@@ -22,7 +22,7 @@ class Table extends React.Component {
     componentDidMount() {
         console.log(`!!!!Comp did MOUNT in Table!!!!`)
         if(this.props.products) {
-            axios.get("http://localhost:8005/app/v1/products?sort=date:desc",
+            axios.get("http://localhost:8005/app/v1/products/?sort=date:desc",
                 {
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem('jwt')}`
@@ -45,7 +45,7 @@ class Table extends React.Component {
     componentDidUpdate() {
         if (this.props.tableUpdated) {
                 console.log(`!!!!!!Comp did UPDATE in Table !!!!`)
-                axios.get("http://localhost:8005/app/v1/products?sort=date:desc",
+                axios.get("http://localhost:8005/app/v1/products/?sort=date:desc",
                     {
                         headers: {
                             'Authorization': `Bearer ${localStorage.getItem('jwt')}`

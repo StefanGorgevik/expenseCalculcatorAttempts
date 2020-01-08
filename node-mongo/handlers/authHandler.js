@@ -42,6 +42,7 @@ const login = (req, res) => {
     .then((data) => {
         bcrypt.compare(req.body.password, data.password, function(err, result) {
             if(err) {
+                console.log('first if')
                 return res.status(500).send("Could not compare passwords")
             }
             if(result) {
@@ -53,10 +54,12 @@ const login = (req, res) => {
                 var token = jwt.sign(tokenData, config.getConfig('jwt').key)
                 return res.status(200).send({jwt: token, first_name: data.first_name, last_name: data.last_name})
             }
+            console.log('not found!')
             return res.status(400).send('Not found!')
         })
     })
     .catch(err => {
+        console.log('second if')
         return res.status(500).send("Could not found user!");
     })
 }

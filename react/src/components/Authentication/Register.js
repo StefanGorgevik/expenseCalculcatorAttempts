@@ -40,7 +40,7 @@ class Register extends React.Component {
                         this.state.telephone !== null && this.state.country !== null && this.state.password !== null) {
                         console.log("Entered else")
                         event.preventDefault()
-                        axios.post('http://127.0.0.1:8006/app/v1/register', {
+                        axios.post('http://127.0.0.1:8006/app/v1/auth/register', {
                                 first_name: this.state.first_name,
                                 last_name: this.state.last_name,
                                 email: this.state.email,
@@ -54,7 +54,7 @@ class Register extends React.Component {
                                         console.log(res)
                                        
                                         console.log("ENTERED 1st RESPONSE")
-                                        axios.post('http://127.0.0.1:8006/app/v1/login',
+                                        axios.post('http://127.0.0.1:8006/app/v1/auth/login',
                                                 {
                                                         email: this.state.email,
                                                         password: this.state.password

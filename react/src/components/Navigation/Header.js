@@ -41,6 +41,7 @@ class Header extends React.Component {
 
     signOutAccepted = () => {
         localStorage.clear()
+        localStorage.removeItem('jwt')
         this.setState({ signOut: true })
     }
 

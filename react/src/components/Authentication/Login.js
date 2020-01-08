@@ -26,7 +26,7 @@ class Login extends React.Component {
 
     signIn = (event) => {
         event.preventDefault();
-        axios.post('http://127.0.0.1:8006/app/v1/login',
+        axios.post('http://127.0.0.1:8006/app/v1/auth/login',
             {
                 email: this.state.email,
                 password: this.state.password

@@ -21,16 +21,16 @@ app.use(                                                       //sekoj req ke po
         { secret: config.getConfig('jwt').key }
     )
         .unless(
-            { path: ['/app/v1/register', '/app/v1/login'] }
+            { path: ['/app/v1/auth/register', '/app/v1/auth/login'] }
         )
 );
 
 //routes
 const authHandler = require('../handlers/authHandler')
-const url = '/app/v1'
+const url = '/app/v1/auth/'
 
-app.post(url + '/register', authHandler.register)
-app.post(url + '/login', authHandler.login)
+app.post(url + 'register', authHandler.register)
+app.post(url + 'login', authHandler.login)
 
 app.listen(8006, (err) => {
     if(err) {

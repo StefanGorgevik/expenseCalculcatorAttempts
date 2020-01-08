@@ -60,6 +60,7 @@ const login = (req, res) => {
     })
     .catch(err => {
         console.log('second if')
+        console.log(err)
         return res.status(500).send("Could not found user!");
     })
 }

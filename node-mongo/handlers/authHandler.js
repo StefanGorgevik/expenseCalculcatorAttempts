@@ -72,22 +72,6 @@ const getUserInfo = (req,res) => {
     })
 }
 
-// const updateUserInfo = (req, res) => {
-//     console.log(req.params.id)
-//     const body = req.body;
-//     console.log(body)
-//     authModel.updateUser(req.params.id, body )
-//     .then(res => {
-//         console.log('entered then')
-//         res.status(201).send('User updated');
-//     })
-//     .catch(err => {
-//         console.log('error is here')
-//         console.log(err)
-//         res.status(500).send(err)
-//     })
-// }
-
 const updateUserInfo = (req, res) => {
         var data = req.body;
         authModel.updateUser(req.params.id, data)

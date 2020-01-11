@@ -72,12 +72,10 @@ class UserInfo extends React.Component {
                     localStorage.setItem('email', this.state.email)
                     localStorage.setItem('first_name', this.state.first_name)
                     localStorage.setItem('last_name', this.state.last_name)
-                    console.log(localStorage.getItem('first_name'))
                     window.location.reload()
                 })
                 .catch((err) => {
-                    console.log('here');
-                    console.log(err.response);
+                    console.log(err);
                 })
         }
     }

@@ -42,7 +42,6 @@ const getUser = (email) => {
     return new Promise ((success, fail) => {
         User.find({email: email}, (err, data) => {
             if(err) {
-                console.log(err);
                 return fail(err);
             }
             return success(data)

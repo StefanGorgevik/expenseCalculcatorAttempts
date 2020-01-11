@@ -1,100 +1,8 @@
-/* import React from 'react'
-import './UserInfo.css'
-import axios from 'axios';
-
-import Infos from './Infos'
-
-class UserInfo extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            values: [],
-            keys: [],
-            name: '',
-            email: '',
-            birthday: '',
-            country: '',
-            telephone: ''
-        }
-    }
-
-    saveUserInfo = (event) => {
-        this.setState({ [event.target.id]: event.target.value })
-        console.log(this.state.name, this.state.email, this.state.telephone)
-    }
-
-    componentDidMount() {
-        axios.post('http://127.0.0.1:8006/app/v1/auth/user-info',
-            {
-                email: localStorage.getItem('email')
-            })
-            .then(res => {
-                console.log(res.data[0]._id)
-                const user = {
-                    name: res.data[0].first_name + ' ' + res.data[0].last_name,
-                    email: res.data[0].email,
-                    birthday: res.data[0].date_of_birth.toString().slice(0, 10),
-                    country: res.data[0].country,
-                    telephone: res.data[0].telephone
-                }
-                const keys = Object.keys(user)
-                const values = Object.values(user)
-                this.setState({ values: values, keys: keys })
-            })
-            .catch(err => {
-                console.log(err)
-            })
-    }
-
-    updateUserInfo = () => {
-
-    }
-
-
-    render() {
-        var { values, keys } = this.state
-        keys = keys.map((k) => { return k.charAt(0).toUpperCase() + k.slice(1) })
-        const infos = keys.map((info, index) => {
-            return (<Infos key={index} info={info} name={info} val={values[index]} 
-                save={this.saveUserInfo}
-            />)
-        })
-
-        return (
-            <div>
-                <this.props.header />
-                <h3 className="general-h3">General Account Settings</h3>
-                <main className="user-info-main">
-                    <div className="user-info-div">
-                        <div className="user-form-box">
-                            <form>
-                                {infos}
-                                <button className="save-btn">Save Settings</button>
-                            </form>
-                        </div>
-                    </div>
-                    <div className="new-product-div">
-                        <span><i className="fas fa-plus-circle"></i></span>
-                        <h3>You are changing your user account settings</h3>
-                    </div>
-                </main>
-            </div>
-        )
-    }
-}
-
-export default UserInfo
-
- */
-
-
 import React from 'react'
 import './UserInfo.css'
 import axios from 'axios';
 import { Link } from 'react-router-dom'
 
-import store from '../../redux/store'
-import { saveUserName } from '../../redux/actions/userAction'
 
 class UserInfo extends React.Component {
     constructor(props) {
@@ -118,6 +26,11 @@ class UserInfo extends React.Component {
         axios.post('http://127.0.0.1:8006/app/v1/auth/user-info',
             {
                 email: localStorage.getItem('email')
+            },
+            {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('jwt')}`
+                }
             })
             .then(res => {
                 this.setState({
@@ -136,8 +49,8 @@ class UserInfo extends React.Component {
     }
 
     updateUserInfo = (event) => {
-        if (this.state.name === '' || this.state.email === '' ||
-            this.state.birthday === '' || this.state.country === '' || this.state.telephone === '') {
+        if (this.state.first_name.length === 0 && this.state.last_name.length === 0 &&
+            this.state.email.length === 0 && this.state.birthday.length === 0 && this.state.country.length === 0 && this.state.telephone.length === 0) {
             alert('Please fill the fields!')
             event.preventDefault()
         } else {
@@ -145,7 +58,7 @@ class UserInfo extends React.Component {
                 first_name: this.state.first_name,
                 last_name: this.state.last_name,
                 email: this.state.email,
-                date_of_birth: this.state.date_of_birth,
+                date_of_birth: this.state.birthday,
                 country: this.state.country,
                 telephone: this.state.telephone,
             },
@@ -156,14 +69,16 @@ class UserInfo extends React.Component {
                 }
             )
                 .then(res => {
-                    store.dispatch(saveUserName(this.state.first_name, this.state.last_name))
-                    localStorage.removeItem('email')
                     localStorage.setItem('email', this.state.email)
-                    console.log(res)
+                    localStorage.setItem('first_name', this.state.first_name)
+                    localStorage.setItem('last_name', this.state.last_name)
+                    console.log(localStorage.getItem('first_name'))
+                    window.location.reload()
                 })
-                .catch(err =>
-                    console.log(err)
-                )
+                .catch((err) => {
+                    console.log('here');
+                    console.log(err.response);
+                })
         }
     }
 

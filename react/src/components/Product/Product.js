@@ -1,5 +1,5 @@
 import React from 'react'
-import './New-product.css'
+import './Product.css'
 
 import { tableUpdated } from '../../redux/actions/productAction'
 import store from '../../redux/store'
@@ -76,7 +76,7 @@ class NewProduct extends React.Component {
                     console.log(res)
                 })
                 .catch(err => {
-                    console.log(err.response)
+                    console.log(err)
                 })
         }
     }

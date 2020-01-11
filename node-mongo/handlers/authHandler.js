@@ -51,7 +51,7 @@ const login = (req, res) => {
                     email: data.email
                 }
                 var token = jwt.sign(tokenData, config.getConfig('jwt').key)
-                return res.status(200).send({jwt: token, first_name: data.first_name, last_name: data.last_name})
+                return res.status(200).send({jwt: token, first_name:data.first_name, last_name:data.last_name, email: data.email})
             }
             return res.status(400).send('Not found!')
         })
@@ -62,7 +62,29 @@ const login = (req, res) => {
     })
 }
 
+const getUserInfo = (req,res) => {
+    authModel.getUser(req.body.email)
+    .then(data => {
+        res.status(200).send(data)
+    })
+    .catch(err => {
+        res.status(500).send(err)
+    })
+}
+
+const updateUserInfo = (req, res) => {
+    authModel.updateUser(req.params.id, req.body )
+    .then(res => {
+        res.status(201).send('User updated');
+    })
+    .catch(err => {
+        res.status(500).send(err)
+    })
+}
+
 module.exports = {
     register,
-    login
+    login,
+    getUserInfo,
+    updateUserInfo
 }

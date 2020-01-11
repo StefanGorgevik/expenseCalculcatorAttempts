@@ -38,7 +38,32 @@ const login = (email) => {
     })
 }
 
+const getUser = (email) => {
+    return new Promise ((success, fail) => {
+        User.find({email: email}, (err, data) => {
+            if(err) {
+                console.log(err);
+                return fail(err);
+            }
+            return success(data)
+        })
+    })
+}
+
+const updateUser = (id, data) => {
+    return new Promise((success, fail) => {
+        User.updateOne({ _id: id }, data, err => {
+            if (err) {
+                return fail(err)
+            }
+            return success(data)
+        })
+    })
+}
+
 module.exports = {
     register,
-    login
+    login,
+    getUser,
+    updateUser
 }

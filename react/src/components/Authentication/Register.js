@@ -1,9 +1,12 @@
 import React from 'react'
-import '../../assets/styles/inputs-shared.css'
+import '../../assets/styles/Authentication.css'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 
 import { Redirect } from 'react-router-dom'
+
+import store from '../../redux/store'
+import {saveUserName} from '../../redux/actions/userAction'
 
 class Register extends React.Component {
         constructor(props) {
@@ -51,20 +54,16 @@ class Register extends React.Component {
                                 _created: new Date(),
                         })
                                 .then(res => {
-                                        console.log(res)
-                                       
-                                        console.log("ENTERED 1st RESPONSE")
                                         axios.post('http://127.0.0.1:8006/app/v1/auth/login',
                                                 {
                                                         email: this.state.email,
                                                         password: this.state.password
                                                 })
                                                 .then(res => {
-                                                        console.log("RESPONSE STARTED")
-                                                        this.setState({ signed: true })
                                                         localStorage.setItem('jwt', res.data.jwt);
-                                                        localStorage.setItem('first_name', this.state.first_name);
-                                                        localStorage.setItem('last_name', this.state.last_name);  
+                                                        localStorage.setItem('email', res.data.email);
+                                                        store.dispatch(saveUserName(res.data.first_name, res.data.last_name))
+                                                        this.setState({ signed: true })
                                                 })
                                                 .catch(err => {
                                                         console.log(err)
@@ -75,7 +74,6 @@ class Register extends React.Component {
                                 })
                 }
         }
-
 
         render() {
                 return (

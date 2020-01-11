@@ -1,5 +1,4 @@
 export const getProducts = (data) => {
-    console.log('!!!!!! getProducts !!!!!!!!!!!!!!!!!!!!!!!!!!')
     return {
         type: 'GET_PRODUCTS',
         payload: data
@@ -48,4 +47,5 @@ export const tableUpdated = (tableUpdated) => {
         tableUpdated
     }
 }
+
 

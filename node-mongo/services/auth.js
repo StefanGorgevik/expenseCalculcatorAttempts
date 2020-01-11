@@ -21,7 +21,7 @@ app.use(                                                       //sekoj req ke po
         { secret: config.getConfig('jwt').key }
     )
         .unless(
-            { path: ['/app/v1/auth/register', '/app/v1/auth/login'] }
+            { path: ['/app/v1/auth/register', '/app/v1/auth/login', '/app/v1/auth/user-info'] }
         )
 );
 
@@ -31,6 +31,8 @@ const url = '/app/v1/auth/'
 
 app.post(url + 'register', authHandler.register)
 app.post(url + 'login', authHandler.login)
+app.post(url + 'user-info', authHandler.getUserInfo)
+app.put(url + 'user-info/:id', authHandler.updateUserInfo)
 
 app.listen(8006, (err) => {
     if(err) {

@@ -53,11 +53,9 @@ class Expenses extends React.Component {
             var monthNum;
             for(let i = 0; i < this.months.length; i++) {
                 if(this.state.filter === this.months[i]) {
+                    monthNum = i + 1;
                     if(i.toString().length === 1) {
-                        monthNum = i + 1;
                         monthNum = "0" + monthNum.toString();;
-                    }  else {
-                        monthNum = i + 1;
                     }
                 }
             }

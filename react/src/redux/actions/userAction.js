@@ -7,3 +7,12 @@ export const saveUserName = (first_name, last_name) => {
         }
     }
 }
+
+export const nameUpdated = (nameUpdated) => {
+    return {
+        type: "NAME_UPDATED",
+        nameUpdated
+    }
+}
+
+

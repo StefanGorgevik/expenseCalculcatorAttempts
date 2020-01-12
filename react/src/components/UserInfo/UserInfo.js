@@ -3,6 +3,8 @@ import './UserInfo.css'
 import axios from 'axios';
 import { Link } from 'react-router-dom'
 
+import { nameUpdated } from '../../redux/actions/userAction'
+import store from '../../redux/store'
 
 class UserInfo extends React.Component {
     constructor(props) {
@@ -14,12 +16,19 @@ class UserInfo extends React.Component {
             birthday: '',
             country: '',
             telephone: '',
-            id: ''
+            id: '',
+            addressCheckbox: false,
+            address: ''
         }
     }
 
     saveUserInfo = (event) => {
-        this.setState({ [event.target.id]: event.target.value })
+        this.setState({ [event.target.id]: event.target.value})
+        console.log(this.state.address)
+    }
+
+    checkboxClickedHandler = (event) => {
+        this.setState({ addressCheckbox: event.target.checked })
     }
 
     componentDidMount() {
@@ -40,7 +49,8 @@ class UserInfo extends React.Component {
                     birthday: res.data[0].date_of_birth.toString().slice(0, 10),
                     country: res.data[0].country,
                     telephone: res.data[0].telephone,
-                    id: res.data[0]._id
+                    id: res.data[0]._id,
+                    address: res.data[0]._address
                 })
             })
             .catch(err => {
@@ -61,6 +71,7 @@ class UserInfo extends React.Component {
                 date_of_birth: this.state.birthday,
                 country: this.state.country,
                 telephone: this.state.telephone,
+                _address: this.state.address
             },
                 {
                     headers: {
@@ -72,7 +83,8 @@ class UserInfo extends React.Component {
                     localStorage.setItem('email', this.state.email)
                     localStorage.setItem('first_name', this.state.first_name)
                     localStorage.setItem('last_name', this.state.last_name)
-                    window.location.reload()
+                    store.dispatch(nameUpdated(true))
+                    //window.location.reload()
                 })
                 .catch((err) => {
                     console.log(err);
@@ -90,29 +102,38 @@ class UserInfo extends React.Component {
                         <div className="user-form-box">
                             <form>
                                 <p className="input-container">
-                                    <label htmlFor="val-input" className="val-label">First Name: </label>
+                                    <label htmlFor="first_name" className="val-label">First Name: </label>
                                     <input onChange={this.saveUserInfo} id="first_name" name="first_name" className="val-input" type="text" defaultValue={this.state.first_name} />
                                 </p>
                                 <p className="input-container">
-                                    <label htmlFor="val-input" className="val-label">Last Name: </label>
+                                    <label htmlFor="last_name" className="val-label">Last Name: </label>
                                     <input onChange={this.saveUserInfo} id="last_name" name="last_name" className="val-input" type="text" defaultValue={this.state.last_name} />
                                 </p>
                                 <p className="input-container">
-                                    <label htmlFor="val-input" className="val-label">Birthday: </label>
+                                    <label htmlFor="birthday" className="val-label">Birthday: </label>
                                     <input onChange={this.saveUserInfo} id="birthday" name="birthday" className="val-input" type="date" defaultValue={this.state.birthday} />
                                 </p>
                                 <p className="input-container">
-                                    <label htmlFor="val-input" className="val-label">Email: </label>
+                                    <label htmlFor="email" className="val-label">Email: </label>
                                     <input onChange={this.saveUserInfo} id="email" name="email" className="val-input" type="email" defaultValue={this.state.email} />
                                 </p>
                                 <p className="input-container">
-                                    <label htmlFor="val-input" className="val-label">Country: </label>
+                                    <label htmlFor="country" className="val-label">Country: </label>
                                     <input onChange={this.saveUserInfo} id="country" name="country" className="val-input" type="text" defaultValue={this.state.country} />
                                 </p>
                                 <p className="input-container">
-                                    <label htmlFor="val-input" className="val-label">Telephone: </label>
+                                    <label htmlFor="telephone" className="val-label">Telephone: </label>
                                     <input onChange={this.saveUserInfo} id="telephone" name="telephone" className="val-input" type="text" defaultValue={this.state.telephone} />
                                 </p>
+                                <p className="address-p">
+                                    <label htmlFor="addressCheckbox" className="val-label">If you want to add an address, select: </label>
+                                    <input onChange={this.checkboxClickedHandler} type="checkbox" name="addressCheckbox" id="addressCheckbox" />
+                                </p>
+                                {this.state.addressCheckbox ? 
+                                 <p className="input-container">
+                                    <label htmlFor="address" className="val-label">Address: </label>
+                                    <input onChange={this.saveUserInfo} defaultValue={this.state.address} className="val-input" type="text" name="address" id="address" />
+                                </p> : null}
                                 <Link to='/products'>
                                     <button className="save-btn" onClick={this.updateUserInfo}>Save Settings</button>
                                 </Link>

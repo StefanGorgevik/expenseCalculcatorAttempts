@@ -10,7 +10,8 @@ const User = mongoose.model(
         date_of_birth: Date,
         telephone: String,
         country: String,
-        _created: { type: Date, default: Date.now}
+        _created: { type: Date, default: Date.now},
+        _address: String
     })
 )
 

@@ -73,8 +73,7 @@ const getUserInfo = (req,res) => {
 }
 
 const updateUserInfo = (req, res) => {
-        var data = req.body;
-        authModel.updateUser(req.params.id, data)
+        authModel.updateUser(req.params.id, req.body)
         .then(() => {
             res.status(201).send();
         })

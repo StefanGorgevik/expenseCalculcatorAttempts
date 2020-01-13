@@ -103,6 +103,7 @@ class Expenses extends React.Component {
 
         let monthly = (
             <select name="month-select" className="month-select select-box" onChange={this.monthlySelectHandler}>
+                <option defaultChecked>Month</option>
                 {this.months.map((month, index) => {
                     return <option key={`month${index}`} value={month}>{month}</option>
                 })}

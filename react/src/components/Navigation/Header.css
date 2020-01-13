@@ -38,10 +38,9 @@ button {
     background:transparent;
 }
 .active-btn {
-    border-color: #576574;
+    border: 1.5px solid#576574;
     color: #576574;
 }
-
 span,p {
     color: black;
 }

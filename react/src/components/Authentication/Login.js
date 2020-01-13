@@ -11,6 +11,10 @@ class Login extends React.Component {
             password: null,
             signed: false
         }
+    }   
+    
+    componentDidMount() {
+        localStorage.clear()
     }
 
     saveLoginData = (event) => {
@@ -24,6 +28,7 @@ class Login extends React.Component {
     }
 
     signIn = (event) => {
+        localStorage.clear()
         event.preventDefault();
         axios.post('http://127.0.0.1:8006/app/v1/auth/login',
             {

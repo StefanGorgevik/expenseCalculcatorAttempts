@@ -1,8 +1,6 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 
 import { connect } from 'react-redux'
-import TableTools from './TableTools'
 
 const tableRow = (props) => {
     return (
@@ -12,8 +10,8 @@ const tableRow = (props) => {
             <td>{props.description}</td>
             <td>{props.date.toString().slice(0, 10)}</td>
             <td>{props.price}</td>
-            {props.expensesClicked ? 
-                null : <props.tableTools editProduct={props.editProduct} deleteProduct={props.deleteProduct}/>}
+            {!props.expensesClicked ? 
+                <props.tableTools editProduct={props.editProduct} deleteProduct={props.deleteProduct}/> : null}
         </tr>
     )
 }

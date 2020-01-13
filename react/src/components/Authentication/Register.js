@@ -6,7 +6,7 @@ import axios from 'axios'
 import { Redirect } from 'react-router-dom'
 
 import store from '../../redux/store'
-import {saveUserName} from '../../redux/actions/userAction'
+import { saveUserName } from '../../redux/actions/userAction'
 
 class Register extends React.Component {
         constructor(props) {
@@ -22,12 +22,17 @@ class Register extends React.Component {
                         signed: false
                 }
         }
+
+        componentDidMount() {
+                localStorage.clear()
+        }
+
         saveUserToState = (event) => {
                 this.setState({ [event.target.name]: event.target.value });
         }
 
         redirectToMain = () => {
-                if(this.state.signed) {
+                if (this.state.signed) {
                         return <Redirect to='/products' />
                 }
         }
@@ -38,10 +43,9 @@ class Register extends React.Component {
                         this.state.telephone == null || this.state.country == null || this.state.password == null) {
                         event.preventDefault()
                         alert('Please input correct data!')
-                } else if(this.state.first_name !== null && this.state.last_name !== null &&
+                } else if (this.state.first_name !== null && this.state.last_name !== null &&
                         this.state.email !== null && this.state.date_of_birth !== null &&
                         this.state.telephone !== null && this.state.country !== null && this.state.password !== null) {
-                        console.log("Entered else")
                         event.preventDefault()
                         axios.post('http://127.0.0.1:8006/app/v1/auth/register', {
                                 first_name: this.state.first_name,

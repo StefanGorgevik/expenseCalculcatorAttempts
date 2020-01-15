@@ -31,7 +31,6 @@ class Header extends React.Component {
     }
 
     productsClicked = () => {
-        this.setState({expensesClicked: false })
         store.dispatch(expensesClicked(this.state.expensesClicked))
     }
 

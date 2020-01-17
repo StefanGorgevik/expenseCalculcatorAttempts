@@ -14,8 +14,7 @@ class NewProduct extends React.Component {
             type: this.props.editProductClicked ? this.props.productToEdit.type : '',
             description: this.props.editProductClicked ? this.props.productToEdit.description : '',
             date: this.props.editProductClicked ? this.props.productToEdit.date : '',
-            price: this.props.editProductClicked ? this.props.productToEdit.price : '',
-            tableUpdated: false
+            price: this.props.editProductClicked ? this.props.productToEdit.price : ''
         }
     }
 
@@ -25,13 +24,13 @@ class NewProduct extends React.Component {
 
     createProduct = (event) => {
         console.log(this.state)
-        if (this.state.name == '' || this.state.type == '' ||
-            this.state.description == '' || this.state.date == '' || this.state.price == '') {
+        if (this.state.name === '' || this.state.type === '' ||
+            this.state.description === '' || this.state.date === '' || this.state.price === '') {
             event.preventDefault();
             alert('Fill out the fields correctly!')
         } else if (this.state.name !== '' || this.state.type !== '' ||
             this.state.description !== '' || this.state.date !== '' || this.state.price !== '') {   
-            store.dispatch(tableUpdated(!this.state.tableUpdated))
+            store.dispatch(tableUpdated(true))
             axios.post('http://localhost:8005/app/v1/products',
                 {
                     name: this.state.name,
@@ -58,7 +57,7 @@ class NewProduct extends React.Component {
             alert('Please fill the fields!')
             event.preventDefault()
         } else {
-            store.dispatch(tableUpdated(!this.state.tableUpdated))
+            store.dispatch(tableUpdated(true))
             axios.put(`http://localhost:8005/app/v1/products/${this.props.productToEdit._id}`,
                 {
                     name: this.state.name,

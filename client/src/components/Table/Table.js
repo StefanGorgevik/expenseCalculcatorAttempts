@@ -4,8 +4,6 @@ import Alert from '../Alert/Alert'
 import TableRow from './TableRow'
 import TableTools from './TableTools'
 import { connect } from 'react-redux'
-import store from '../../redux/store'
-
 import { deleteProduct, getProducts, editProduct, editProductClicked, getTotalPrice, tableUpdated } from '../../redux/actions/productAction'
 import axios from 'axios'
 
@@ -20,44 +18,14 @@ class Table extends React.Component {
     }
 
     componentDidMount() {
-        if(this.props.products) {
-            axios.get("http://localhost:8005/app/v1/products/?sort=date:desc",
-                {
-                    headers: {
-                        'Authorization': `Bearer ${localStorage.getItem('jwt')}`
-                    }
-                })
-                .then(res => {
-                    store.dispatch(getProducts(res.data));
-                    let totalPrice = 0;
-                    for (let i = 0; i < res.data.length; i++) {
-                        totalPrice += parseInt(res.data[i].price)
-                    }
-                    store.dispatch(getTotalPrice(totalPrice));
-                })
-                .catch(err => {
-                    console.log(err);
-                })
-        }
+        console.log('comp did mount')
+        this.props.getProducts();
     }
 
     componentDidUpdate() {
-        if (this.props.tableUpdated) {
-                axios.get("http://localhost:8005/app/v1/products/?sort=date:desc",
-                    {
-                        headers: {
-                            'Authorization': `Bearer ${localStorage.getItem('jwt')}`
-                        }
-                    }
-                )
-                    .then(res => {
-                        store.dispatch(getProducts(res.data));
-                        store.dispatch(tableUpdated(false));
-                    })
-                    .catch(err => {
-                        console.log(err);
-                    })
-               
+        if (this.props.tabUpdated) {
+            this.props.getProducts();
+            this.props.tableUpdated(false); 
         }
     }
 
@@ -67,9 +35,9 @@ class Table extends React.Component {
 
     editProduct = (product) => {
         const clicked = !this.state.editProductClicked
-        store.dispatch(editProduct(product));
-        store.dispatch(editProductClicked(clicked));
-
+        this.props.editProduct(product)
+       
+        this.props.editProductClicked(clicked)
     }
 
     deleteProduct = (product, productID) => {
@@ -82,7 +50,7 @@ class Table extends React.Component {
             })
             .then(res => {
                 console.log(res)
-                store.dispatch(deleteProduct(product))
+                this.props.deleteProduct(product)
             })
             .catch(err => {
                 console.log(err)
@@ -92,10 +60,15 @@ class Table extends React.Component {
     deleteProductHandler = (product) => {
         this.setState({ product: product })
         this.setState({ alertShow: true })
-
     }
 
     render() {
+        let totalPrice = 0;
+        for (let i = 0; i < this.props.products.length; i++) {
+            totalPrice += parseInt(this.props.products[i].price)
+        }
+        this.props.getTotalPrice(totalPrice);
+
         let tableRow = null;
         if (this.props.products) {
             tableRow = this.props.products.map(product => {
@@ -128,7 +101,7 @@ class Table extends React.Component {
                                 <th>Product Description</th>
                                 <th>Purchase Date</th>
                                 <th>Product Price</th>
-                                {!this.props.expensesClicked ? <th>Product Options</th> : null }
+                                {!this.props.expensesClicked ? <th>Product Options</th> : null}
                             </tr>
                         </thead>
                         <tbody>
@@ -149,8 +122,31 @@ function mapStateToProps(state) {
     return {
         products: state.products,
         expensesClicked: state.expensesClicked,
-        tableUpdated: state.tableUpdated
+        tabUpdated: state.tableUpdated
     }
 }
 
-export default connect(mapStateToProps)(Table)
+function mapDispatchToProps(dispatch) {
+    return {
+        getProducts: () => {
+            dispatch(getProducts())
+        },
+        deleteProduct: (product) => {
+            dispatch(deleteProduct(product))
+        },
+        getTotalPrice: (totalPrice) => {
+            dispatch(getTotalPrice(totalPrice))
+        },
+        tableUpdated: (tabUpdated) => {
+            dispatch(tableUpdated(tabUpdated))
+        },
+        editProduct: (product) => {
+            dispatch(editProduct(product))
+        },
+        editProductClicked: (editProdClicked) => {
+            dispatch(editProductClicked(editProdClicked))
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Table)

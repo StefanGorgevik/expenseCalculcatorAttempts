@@ -6,6 +6,7 @@ import { expensesClicked } from '../../redux/actions/productAction'
 import store from '../../redux/store'
 import SignOut from '../SignOut/SignOut'
 import { Redirect } from 'react-router-dom'
+import Profile from '../../assets/images/small_profile.png'
 
 class Header extends React.Component {
     constructor(props) {
@@ -59,7 +60,7 @@ class Header extends React.Component {
                             <NavLink to='/expenses' className='btn-links' onClick={this.expensesClicked}> Expenses</NavLink>
                         </div>
                         <div className="right-side">
-                            <img id="profile-image" src="../../assets/images/small_profile.png" alt="profile-image" />
+                            <img id="profile-image" src={Profile} alt="profile" />
                             <p id='name-p'>{this.state.name}</p>
                             <p className="user-info"><Link to='/user-info'>Your Info</Link></p>
                             <p className="sign-out"><Link to='#' onClick={this.signOutClicked}>Sign Out</Link></p>

@@ -19,13 +19,6 @@ class Header extends React.Component {
             name: localStorage.getItem('first_name') + ' ' + localStorage.getItem('last_name')
         }
     }
-    // componentDidUpdate(prevProps, prevState) {
-    //     console.log(prevProps, prevState)
-    //     if (this.state.nameUpdated) {
-    //             console.log("gg")
-    //             this.setState({ name: localStorage.getItem('first_name') + ' ' + localStorage.getItem('last_name') })    
-    //     } 
-    // }
 
     expensesClicked = () => {
         store.dispatch(expensesClicked(!this.state.expensesClicked))

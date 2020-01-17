@@ -68,12 +68,4 @@ class Header extends React.Component {
     }
 }
 
-// function mapStateToProps(state) {
-//     return {
-//         nameUpdated: state.nameUpdated
-//     }
-// }
-
-
-// export default connect(mapStateToProps)(Header)
 export default Header

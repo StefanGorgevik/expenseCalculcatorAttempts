@@ -19,7 +19,8 @@ class Register extends React.Component {
                         telephone: null,
                         country: null,
                         password: null,
-                        signed: false
+                        signed: false,
+                        error: null
                 }
         }
 
@@ -69,13 +70,15 @@ class Register extends React.Component {
                                                         localStorage.setItem('first_name', res.data.first_name);
                                                         localStorage.setItem('last_name', res.data.last_name);
                                                         store.dispatch(saveUserName(res.data.first_name, res.data.last_name))
-                                                        this.setState({ signed: true })
+                                                        this.setState({ signed: true, error: false })
                                                 })
                                                 .catch(err => {
                                                         console.log(err)
                                                 });
                                 })
                                 .catch(err => {
+                                        this.setState({ error: true })
+                                        setTimeout(function() {window.location.reload()} , 3000)
                                         console.log(err)
                                 })
                 }
@@ -99,6 +102,7 @@ class Register extends React.Component {
                                                         <label className="text-field-input" htmlFor="email">E-mail</label>
                                                         <input onChange={this.saveUserToState} className="text-field" type="email" name="email" id="email" />
                                                 </p>
+                                                
                                                 <p className="input-container">
                                                         <label className="text-field-input" htmlFor="date_of_birth">Date of Birth</label>
                                                         <input onChange={this.saveUserToState} className="text-field" type="date" name="date_of_birth" id="date_of_birth" />
@@ -114,7 +118,8 @@ class Register extends React.Component {
                                                 <p className="input-container">
                                                         <label className="text-field-input" htmlFor="password">Password</label>
                                                         <input onChange={this.saveUserToState} className="text-field" type="password" name="password" id="password" />
-                                                </p>
+                                                </p>                                                
+                                                {this.state.error ? <p>User exists! Change email! Page will reload!</p> : null}
                                                 <button className="primary-btn" type="submit" onClick={this.saveUser}>Register</button>
                                         </form>
                                 </div>

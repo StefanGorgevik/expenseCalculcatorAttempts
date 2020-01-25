@@ -3,6 +3,9 @@ import '../../assets/styles/Authentication.css'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { Redirect } from 'react-router-dom'
+
+import { saveUserName } from '../../redux/actions/userAction'
+import store from '../../redux/store'
 class Login extends React.Component {
     constructor(props) {
         super(props)
@@ -41,6 +44,8 @@ class Login extends React.Component {
                 localStorage.setItem('email', res.data.email);
                 localStorage.setItem('first_name', res.data.first_name);
                 localStorage.setItem('last_name', res.data.last_name);
+                const name = res.data.first_name + ' ' + res.data.last_name
+                store.dispatch(saveUserName(name))
                 this.setState({ signed: true, error: false })
             })
             .catch(err => {

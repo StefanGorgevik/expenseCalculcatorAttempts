@@ -7,7 +7,7 @@ import store from '../../redux/store'
 import SignOut from '../SignOut/SignOut'
 import { Redirect } from 'react-router-dom'
 import Profile from '../../assets/images/small_profile.png'
-
+import { connect } from 'react-redux'
 class Header extends React.Component {
     constructor(props) {
         super(props)
@@ -15,9 +15,13 @@ class Header extends React.Component {
             expensesClicked: false,
             signOut: false,
             signOutClicked: false,
-            nameUpdated: false,
-            name: localStorage.getItem('first_name') + ' ' + localStorage.getItem('last_name')
+            name: this.props.userName
         }
+    }
+
+    componentDidMount() {
+        const user = localStorage.getItem('first_name') + ' ' + localStorage.getItem('last_name');
+        this.setState({name: user})
     }
 
     expensesClicked = () => {
@@ -38,9 +42,9 @@ class Header extends React.Component {
 
     signOutAccepted = () => {
         localStorage.clear()
-        localStorage.removeItem('jwt')
         this.setState({ signOut: true })
     }
+    
 
     render() {
         return (
@@ -67,5 +71,10 @@ class Header extends React.Component {
         )
     }
 }
+function mapStateToProps(state) {
+    return {
+        userName: state.userName
+    }
+}
 
-export default Header
+export default connect(mapStateToProps)(Header)

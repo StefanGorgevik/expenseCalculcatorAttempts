@@ -7,18 +7,21 @@ import { Redirect } from 'react-router-dom'
 
 import store from '../../redux/store'
 import { saveUserName } from '../../redux/actions/userAction'
+import Input from '../Input/Input'
 
 class Register extends React.Component {
         constructor(props) {
                 super(props)
                 this.state = {
-                        first_name: null,
-                        last_name: null,
-                        email: null,
-                        date_of_birth: null,
-                        telephone: null,
-                        country: null,
-                        password: null,
+                        userInfo: {
+                                first_name: null,
+                                last_name: null,
+                                email: null,
+                                date_of_birth: null,
+                                telephone: null,
+                                country: null,
+                                password: null
+                        },
                         signed: false,
                         error: null
                 }
@@ -29,7 +32,7 @@ class Register extends React.Component {
         }
 
         saveUserToState = (event) => {
-                this.setState({ [event.target.name]: event.target.value });
+                this.setState({ ...this.state.userInfo, userInfo: { ...this.state.userInfo, [event.target.id]: event.target.value } });
         }
 
         redirectToMain = () => {
@@ -49,20 +52,20 @@ class Register extends React.Component {
                         this.state.telephone !== null && this.state.country !== null && this.state.password !== null) {
                         event.preventDefault()
                         axios.post('http://127.0.0.1:8006/app/v1/auth/register', {
-                                first_name: this.state.first_name,
-                                last_name: this.state.last_name,
-                                email: this.state.email,
-                                password: this.state.password,
-                                date_of_birth: this.state.date_of_birth,
-                                telephone: this.state.telephone,
-                                country: this.state.country,
+                                first_name: this.state.userInfo.first_name,
+                                last_name: this.state.userInfo.last_name,
+                                email: this.state.userInfo.email,
+                                password: this.state.userInfo.password,
+                                date_of_birth: this.state.userInfo.date_of_birth,
+                                telephone: this.state.userInfo.telephone,
+                                country: this.state.userInfo.country,
                                 _created: new Date(),
                         })
                                 .then(res => {
                                         axios.post('http://127.0.0.1:8006/app/v1/auth/login',
                                                 {
-                                                        email: this.state.email,
-                                                        password: this.state.password
+                                                        email: this.state.userInfo.email,
+                                                        password: this.state.userInfo.password
                                                 })
                                                 .then(res => {
                                                         localStorage.setItem('jwt', res.data.jwt);
@@ -77,51 +80,25 @@ class Register extends React.Component {
                                                 });
                                 })
                                 .catch(err => {
-                                        // if(err.response.status === 500) {
-                                        //         this.setState({ error: true })
-                                        //         setTimeout(function() {window.location.reload()} , 3000)
-                                        // }
                                         console.log(err)
                                 })
                 }
         }
 
         render() {
+                var labels = ["First Name", "Last Name", "Email", "Date of Birth", "Telephone", "Country", "Password"]
+                var inputs = Object.keys(this.state.userInfo).map((info, index) => {
+                        return (
+                                <Input key={index} htmlFor={info} labelName={labels[index]} inputId={info} saveUser={this.saveUserToState} />
+                        )
+                })
+
                 return (
                         <React.Fragment>
                                 {this.redirectToMain()}
                                 <div className="box" id="register">
                                         <form>
-                                                <p className="input-container">
-                                                        <label className="text-field-input" id="first-name-label" htmlFor="first_name">First Name</label>
-                                                        <input onChange={this.saveUserToState} className="text-field" type="text" name="first_name" id="first_name" />
-                                                </p>
-                                                <p className="input-container">
-                                                        <label className="text-field-input" htmlFor="last_name">Last Name</label>
-                                                        <input onChange={this.saveUserToState} className="text-field" type="text" name="last_name" id="last_name" />
-                                                </p>
-                                                <p className="input-container">
-                                                        <label className="text-field-input" htmlFor="email">E-mail</label>
-                                                        <input onChange={this.saveUserToState} className="text-field" type="email" name="email" id="email" />
-                                                </p>
-                                                
-                                                <p className="input-container">
-                                                        <label className="text-field-input" htmlFor="date_of_birth">Date of Birth</label>
-                                                        <input onChange={this.saveUserToState} className="text-field" type="date" name="date_of_birth" id="date_of_birth" />
-                                                </p>
-                                                <p className="input-container">
-                                                        <label className="text-field-input" htmlFor="telephone">Telephone</label>
-                                                        <input onChange={this.saveUserToState} className="text-field" type="text" name="telephone" id="telephone" />
-                                                </p>
-                                                <p className="input-container">
-                                                        <label className="text-field-input" htmlFor="country">Country</label>
-                                                        <input onChange={this.saveUserToState} className="text-field" type="text" name="country" id="country" />
-                                                </p>
-                                                <p className="input-container">
-                                                        <label className="text-field-input" htmlFor="password">Password</label>
-                                                        <input onChange={this.saveUserToState} className="text-field" type="password" name="password" id="password" />
-                                                </p>                                                
-                                                {/* {this.state.error ? <p className="error-p">User exists! Change email! Page will reload!</p> : null} */}
+                                                {inputs}
                                                 <button className="primary-btn" type="submit" onClick={this.saveUser}>Register</button>
                                         </form>
                                 </div>

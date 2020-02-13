@@ -118,7 +118,7 @@ class Expenses extends React.Component {
         return (
             <React.Fragment>
                 <this.props.header />
-                <h3 id="expenses-h3">Expenses</h3>
+                <h1 id="expenses-h1">Expenses</h1>
                 <div className="expenses-div">
                     <Link to="#"><button className={!this.state.active ? 'active-btn select-btn' : 'select-btn'} onClick={this.yearlySelect}>Yearly</button></Link>
                     <Link to="#"><button className={this.state.active ? 'active-btn select-btn' : 'select-btn'} onClick={this.monthlySelect}>Monthly</button></Link>

@@ -42,14 +42,14 @@ class Register extends React.Component {
         }
 
         saveUser = (event) => {
-                if (this.state.first_name == null || this.state.last_name == null ||
-                        this.state.email == null || this.state.date_of_birth == null ||
-                        this.state.telephone == null || this.state.country == null || this.state.password == null) {
+                if (this.state.userInfo.first_name == null || this.state.userInfo.last_name == null ||
+                        this.state.userInfo.email == null || this.state.userInfo.date_of_birth == null ||
+                        this.state.userInfo.telephone == null || this.state.userInfo.country == null || this.state.userInfo.password == null) {
                         event.preventDefault()
                         alert('Please input correct data!')
-                } else if (this.state.first_name !== null && this.state.last_name !== null &&
-                        this.state.email !== null && this.state.date_of_birth !== null &&
-                        this.state.telephone !== null && this.state.country !== null && this.state.password !== null) {
+                } else if (this.state.userInfo.first_name !== null && this.state.userInfo.last_name !== null &&
+                        this.state.userInfo.email !== null && this.state.userInfo.date_of_birth !== null &&
+                        this.state.userInfo.telephone !== null && this.state.userInfo.country !== null && this.state.userInfo.password !== null) {
                         event.preventDefault()
                         axios.post('http://127.0.0.1:8006/app/v1/auth/register', {
                                 first_name: this.state.userInfo.first_name,

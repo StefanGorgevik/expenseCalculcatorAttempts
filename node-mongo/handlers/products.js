@@ -108,11 +108,22 @@ const deleteProduct = (req, res) => {
     })
 }
 
+const deleteAll = (req, res) => {
+    productModel.deleteAll(req.params.userid)
+    .then(() => {
+        res.status(204).send("Products deleted");
+    })
+    .catch((err) => {
+        res.status(500).send(err);
+    })
+}
+
 module.exports = {
     getAllProducts,
     getOne,
     saveProduct,
     replaceProduct,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    deleteAll
 }

@@ -120,8 +120,8 @@ class Table extends React.Component {
         }
         return (
             <React.Fragment>
-                <main className="main-box">
-                    <table className="Table">
+                <main className="main-box-table">
+                    <table className="table">
                         <thead>
                             <tr>
                                 <th>Product Name</th>

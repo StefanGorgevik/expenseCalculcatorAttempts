@@ -69,11 +69,23 @@ const deleteProduct = (id) => {
         })
     })
 }
+const deleteAll = (userid) => {
+    return new Promise((success,fail) => {
+        Product.deleteMany({userID: userid}, err => {
+            if(err) {
+                console.log(err)
+                return fail(err);
+            }
+            return success();
+        })
+    })
+}
 
 module.exports = {
     getAllProducts,
     getOne,
     saveProduct,
     replaceProduct,
-    deleteProduct
+    deleteProduct,
+    deleteAll
 }

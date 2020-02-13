@@ -30,6 +30,7 @@ app.get(url + ':id', productHandler.getOne);
 app.post(url, productHandler.saveProduct);
 app.put(url + ':id', productHandler.replaceProduct);
 app.patch(url + ':id', productHandler.updateProduct);
+app.delete(url + 'delete-all/:userid', productHandler.deleteAll);
 app.delete(url + ':id', productHandler.deleteProduct);
 
 app.listen(8005, (err) => {

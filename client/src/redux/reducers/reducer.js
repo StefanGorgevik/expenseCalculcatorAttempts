@@ -1,11 +1,15 @@
 const initState = {
     products: [],
+    secondUserProducts: [],
     totalPrice: '',
+    secondUserTotalPrice: '',
     productToEdit: '',
     editProductClicked: '',
     expensesClicked: false,
     tableUpdated: false,
-    userName: ''
+    userName: '',
+    addAccountClicked: false,
+    secondUserSigned: false
 }
 
 export function reducer(state = initState, action) {
@@ -13,6 +17,11 @@ export function reducer(state = initState, action) {
         case "GET_PRODUCTS": {
             return {
                 ...state, products: action.payload
+            }
+        }
+        case "SECOND_USER_GET_PRODUCTS": {
+            return {
+                ...state, secondUserProducts: action.payload
             }
         }
         case "DELETE_PRODUCT": {
@@ -23,6 +32,9 @@ export function reducer(state = initState, action) {
         }
         case "GET_TOTAL_PRICE": {
             return { ...state, totalPrice: action.payload }
+        }
+        case "SECOND_USER_GET_TOTAL_PRICE": {
+            return { ...state, secondUserTotalPrice: action.payload }
         }
 
         case "EDIT_PRODUCT": {
@@ -40,6 +52,12 @@ export function reducer(state = initState, action) {
         }     
         case "SAVE_USER_NAME": {
             return { ...state, userName: action.userName }
+        }
+        case "ADD_ACCOUNT_CLICKED": {
+            return { ...state, addAccountClicked: action.payload }
+        }
+        case "SECOND_USER_SIGNED": {
+            return { ...state, secondUserSigned: action.payload }
         }
         default:
             return state

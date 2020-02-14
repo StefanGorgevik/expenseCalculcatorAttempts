@@ -6,6 +6,9 @@ import axios from 'axios'
 import Alert from '../Alert/Alert'
 import store from '../../redux/store'
 import { editProductClicked, getProducts, tableUpdated } from '../../redux/actions/productAction'
+import { connect } from 'react-redux'
+import SecondLogin from '../SecondUser/SecondLogin/SecondLogin'
+import SecondUser from '../SecondUser/SecondUser'
 class Products extends React.Component {
     constructor(props) {
         super(props)
@@ -78,28 +81,39 @@ class Products extends React.Component {
             />
         }
         return (
-            <React.Fragment>
+            <div>
                 <this.props.header />
-                <div className="main-div">
-                    <h1 className="hehe">Products</h1>
-                    <div className="select-filter-div">
-                        <label htmlFor="sort">Filter by:
+                <div className="added-second-user">
+                    <div className="main-div">
+                        <h1>Products</h1>
+                        <div className="select-filter-div">
+                            <label htmlFor="sort">Filter by:
                     <select name="filterOption" className='select-filter' id="sort" onChange={this.filterHandler}>
-                                <option value="date:desc">Last Purchase</option>
-                                <option value="date:asc">First Purchase</option>
-                                <option value="price:desc">Highest Price</option>
-                                <option value="price:asc">Lowest Price</option>
-                            </select>
-                        </label>
+                                    <option value="date:desc">Last Purchase</option>
+                                    <option value="date:asc">First Purchase</option>
+                                    <option value="price:desc">Highest Price</option>
+                                    <option value="price:asc">Lowest Price</option>
+                                </select>
+                            </label>
+                        </div>
+                        <button onClick={this.deleteButtonClicked} className="delete-all-btn">Delete all!</button>
                     </div>
-                    <button onClick={this.deleteButtonClicked} className="delete-all-btn">Delete all!</button>
+                    <this.props.table />
                 </div>
-                <this.props.table />
+                {this.props.addAccountClicked ? <SecondLogin /> : null}
+                {this.props.secondUserSigned ? <SecondUser /> : null}
                 <Link to="/new-product"><button className="new-btn" onClick={this.newProductHandler}>New Product</button></Link>
                 {alert}
-            </React.Fragment>
+            </div>
         )
     }
 }
 
-export default Products
+const mapStateToProps = (state) => {
+    return {
+        addAccountClicked: state.addAccountClicked,
+        secondUserSigned: state.secondUserSigned
+    }
+}
+
+export default connect(mapStateToProps)(Products)

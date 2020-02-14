@@ -8,6 +8,7 @@ import SignOut from '../SignOut/SignOut'
 import { Redirect } from 'react-router-dom'
 import Profile from '../../assets/images/small_profile.png'
 import { connect } from 'react-redux'
+import {addAccountClicked} from '../../redux/actions/userAction'
 class Header extends React.Component {
     constructor(props) {
         super(props)
@@ -44,6 +45,10 @@ class Header extends React.Component {
         localStorage.clear()
         this.setState({ signOut: true })
     }
+
+    addAccount = () => {
+        store.dispatch(addAccountClicked(true))
+    }
     
 
     render() {
@@ -60,6 +65,7 @@ class Header extends React.Component {
                             <img id="profile-image" src={Profile} alt="profile" />
                             <p id='name-p'>{this.state.name}</p>
                             <p className="user-info"><Link to='/user-info'>Your Info</Link></p>
+                            <p className="user-info" onClick={this.addAccount}><Link to='#'>Add Account</Link></p>
                             <p className="sign-out"><Link to='#' onClick={this.signOutClicked}>Sign Out</Link></p>
                         </div>
                     </nav>

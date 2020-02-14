@@ -6,6 +6,7 @@ import store from '../../redux/store'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import axios from 'axios'
+import Input from '../Input/Input'
 class NewProduct extends React.Component {
     constructor(props) {
         super(props)
@@ -80,7 +81,17 @@ class NewProduct extends React.Component {
         }
     }
 
+    //<input defaultValue={this.props.editProductClicked ? this.props.productToEdit.date.toString().slice(0, 10) : ''}
+
     render() {
+        var labels = ["Product Name", "Product Type", "Product Description", "Product Date", "Product Price"];
+
+        var inputs = Object.keys(this.state).map((info, index) => {
+           return ( <Input key={index} htmlFor={info} labelName={labels[index]}
+            inputId={info} saveUser={this.saveProduct}
+            value={this.props.editProductClicked ? this.props.productToEdit[info] : '' }/>
+            )
+        })
         return (
             <React.Fragment>
                 <this.props.header />
@@ -89,36 +100,7 @@ class NewProduct extends React.Component {
                     <div className="box-container">
                         <div className="form-box">
                             <form>
-                                <p className="input-container">
-                                    <label className="text-field-input" htmlFor="name">Product Name</label>
-                                    <input defaultValue={this.props.editProductClicked ? this.props.productToEdit.name : ''}
-                                        onChange={this.saveProduct}
-                                        className="text-field" type="text" name="name" id="name" />
-                                </p>
-                                <p className="input-container">
-                                    <label className="text-field-input" htmlFor="description">Product Description</label>
-                                    <input defaultValue={this.props.editProductClicked ? this.props.productToEdit.description : ''}
-                                        onChange={this.saveProduct}
-                                        className="text-field" type="text" name="description" id="description" />
-                                </p>
-                                <p className="input-container">
-                                    <label className="text-field-input" htmlFor="type">Product Type</label>
-                                    <input defaultValue={this.props.editProductClicked ? this.props.productToEdit.type : ''}
-                                        onChange={this.saveProduct}
-                                        className="text-field" type="text" name="type" id="type" />
-                                </p>
-                                <p className="input-container">
-                                    <label className="text-field-input" htmlFor="date">Product Date</label>
-                                    <input defaultValue={this.props.editProductClicked ? this.props.productToEdit.date.toString().slice(0, 10) : ''}
-                                        onChange={this.saveProduct}
-                                        className="text-field" type="date" name="date" id="date" />
-                                </p>
-                                <p className="input-container">
-                                    <label className="text-field-input" htmlFor="price">Product Price</label>
-                                    <input defaultValue={this.props.editProductClicked ? Number(this.props.productToEdit.price) : ''}
-                                        onChange={this.saveProduct}
-                                        className="text-field" type="text" name="price" id="price" />
-                                </p>
+                                {inputs}
                                 <Link to='/products'>
                                     {this.props.editProductClicked ?
                                         <button onClick={this.editProduct} id="primary-button" className="primary-btn" type="submit"> Edit Product</button> :

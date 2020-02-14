@@ -4,6 +4,12 @@ export const getProducts = (data) => {
         payload: data
     }
 }
+export const getProductsSecond = (data) => {
+    return {
+        type: 'SECOND_USER_GET_PRODUCTS',
+        payload: data
+    }
+}
 
 export const deleteProduct = (product) => {
     return {
@@ -15,6 +21,13 @@ export const deleteProduct = (product) => {
 export const getTotalPrice = (price) => {
     return {
         type: "GET_TOTAL_PRICE",
+        payload: price
+    }
+}
+
+export const getTotalPriceSecond = (price) => {
+    return {
+        type: "SECOND_USER_GET_TOTAL_PRICE",
         payload: price
     }
 }

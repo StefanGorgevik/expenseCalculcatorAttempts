@@ -1,4 +1,5 @@
 import React from 'react'
+import './Input.css'
 
 const Input = (props) => {
     return (
@@ -6,7 +7,9 @@ const Input = (props) => {
             <label className="text-field-input" id="first-name-label" htmlFor={props.htmlFor}>{props.labelName}</label>
             <input onChange={props.saveUser} className="text-field" 
             type={props.htmlFor === 'date_of_birth' ? 'date' : 'text' && props.htmlFor === 'password' ? 'password' : 'text'} 
-            id={props.inputId} />
+            id={props.inputId} 
+                defaultValue={props.value ? props.value: null}
+            />
         </p>
     )
 }

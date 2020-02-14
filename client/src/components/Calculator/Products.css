@@ -32,18 +32,7 @@ span,p {
     width: 100%;
     justify-content: space-between;
 }
-.select-filter{
-    height: 35px;
-    color: #8d8d8d;
-    margin-left: 10px;
-}
 
-.select-filter option {
-    padding: 10px;
-}
-.select-filter-div {
-    margin-right: -40px;
-}
 
 .main-div h1 {
     margin-left: 140px;

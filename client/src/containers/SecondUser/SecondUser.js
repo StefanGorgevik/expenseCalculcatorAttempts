@@ -1,10 +1,11 @@
 import React from 'react'
 import './SecondUser.css'
-import SecondUserTable from './SecondUserTable/SecondUserTable'
+import SecondUserTable from '../../components/SecondUser/SecondUserTable/SecondUserTable'
 
 import store from '../../redux/store'
 import { addAccountClicked, secondUserSigned } from '../../redux/actions/userAction'
-import SecondUserSignOut from './SecondUserSignOut/SecondUserSignOut'
+import SecondUserSignOut from '../../components/SecondUser/SecondUserSignOut/SecondUserSignOut'
+// import ProductsFilter from '../ProductsFilter/ProductsFilter'
 
 class SecondUser extends React.Component {
     constructor(props) {
@@ -15,17 +16,14 @@ class SecondUser extends React.Component {
     }
 
     signOutClickedHandler = () => {
-        console.log('1')
         this.setState({ signOutClicked: true })
     }
 
     hideSignOutHandler = () => {
-        console.log('2')
         this.setState({ signOutClicked: false })
     }
 
     signOutSecondUser = () => {
-        console.log('3')
         let keysToRemove = ["second-jwt", "second-first_name","second-last_name","second-email","second-userid"];
         keysToRemove.forEach(k => {
             localStorage.removeItem(k);
@@ -46,7 +44,6 @@ class SecondUser extends React.Component {
                     <h1>{name}</h1>
                     <button onClick={this.signOutClickedHandler} className="second-user-sign-out-btn">Sign Out</button>
                 </div>
-
                 <SecondUserTable />
                
             </div>

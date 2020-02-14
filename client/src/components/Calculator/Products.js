@@ -8,7 +8,8 @@ import store from '../../redux/store'
 import { editProductClicked, getProducts, tableUpdated } from '../../redux/actions/productAction'
 import { connect } from 'react-redux'
 import SecondLogin from '../SecondUser/SecondLogin/SecondLogin'
-import SecondUser from '../SecondUser/SecondUser'
+import SecondUser from '../../containers/SecondUser/SecondUser'
+import ProductsFilter from '../ProductsFilter/ProductsFilter'
 class Products extends React.Component {
     constructor(props) {
         super(props)
@@ -87,14 +88,7 @@ class Products extends React.Component {
                     <div className="main-div">
                         <h1>Products</h1>
                         <div className="select-filter-div">
-                            <label htmlFor="sort">Filter by:
-                    <select name="filterOption" className='select-filter' id="sort" onChange={this.filterHandler}>
-                                    <option value="date:desc">Last Purchase</option>
-                                    <option value="date:asc">First Purchase</option>
-                                    <option value="price:desc">Highest Price</option>
-                                    <option value="price:asc">Lowest Price</option>
-                                </select>
-                            </label>
+                            <ProductsFilter filter={this.filterHandler}/>
                         </div>
                         <button onClick={this.deleteButtonClicked} className="delete-all-btn">Delete all!</button>
                     </div>

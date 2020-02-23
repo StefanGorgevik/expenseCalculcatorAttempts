@@ -1,0 +1,33 @@
+.table {
+    width: 85%;
+    border-collapse: collapse; 
+    text-align: center;  
+}
+.table tr td {
+    padding: 0;
+}
+.table thead{
+    border-bottom: 1px solid black;
+}
+.table thead th{
+    height: 50px;
+}
+
+.body-tr{
+    background-color: white;
+    border-bottom: 5px solid #E5EDF5;
+}
+#emptyTd {
+    height: 12px;
+    background-color: inherit;
+}
+
+.table .body-tr{
+    height: 50px;
+}
+
+.main-box-table{
+    display: flex;
+    justify-content: center;
+    
+}

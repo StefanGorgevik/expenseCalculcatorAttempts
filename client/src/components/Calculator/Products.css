@@ -89,6 +89,11 @@ span,p {
     flex-direction: column;
 }
 
+.select-filter-div {
+    margin-right: -40px;
+    margin-top: 3;
+}
+
 @media screen and (max-width: 800px) {
     button {
        display: inline-block;

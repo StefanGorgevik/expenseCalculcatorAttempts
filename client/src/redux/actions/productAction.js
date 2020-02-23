@@ -59,3 +59,10 @@ export const tableUpdated = (tableUpdated) => {
         tableUpdated
     }
 }
+
+export const mergeTables = (tablesMerged) => {
+    return {
+        type: "MERGE_TABLES",
+        payload: tablesMerged
+    }
+}

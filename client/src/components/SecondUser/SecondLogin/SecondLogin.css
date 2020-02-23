@@ -1,9 +1,12 @@
 
 .sec-log-box{
     display: flex;
+    position: relative;
+    top: 75px;
+    left: 400px;
+    height: 350px;
     flex-direction: column;
     justify-content: center;
-    margin: auto;
     width: 420px;
     border-radius: 6px;
     background-color: #fff;
@@ -26,7 +29,7 @@
     flex-direction: column;
     align-items: center;
     background: rgba(0, 0, 0, 0.59);
-    margin-top: -470px;
+    margin-top: -419px;
 }
 .second-primary-btn {
     font-size: 15px; 
@@ -44,13 +47,12 @@
     width: 333px;
 }
 
-#second-login {
-    height: 275px;
-    margin-top:250px;
-}
-
-
 .second-error-p {
     color: #8d8d8d;
     font-weight: bold;
+}
+
+.notif-div {
+    margin: 10px;
+    text-align: center;
 }

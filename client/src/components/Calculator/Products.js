@@ -10,6 +10,7 @@ import { connect } from 'react-redux'
 import SecondLogin from '../SecondUser/SecondLogin/SecondLogin'
 import SecondUser from '../../containers/SecondUser/SecondUser'
 import ProductsFilter from '../ProductsFilter/ProductsFilter'
+import MergedTableContainer from '../../containers/MergedTableContainer/MergedTableContainer'
 class Products extends React.Component {
     constructor(props) {
         super(props)
@@ -83,21 +84,25 @@ class Products extends React.Component {
         }
         return (
             <div>
-                <this.props.header />
-                <div className="added-second-user">
-                    <div className="main-div">
-                        <h1>Products</h1>
-                        <div className="select-filter-div">
-                            <ProductsFilter filter={this.filterHandler}/>
+            <this.props.header />
+            {!this.props.tablesMerged ?
+                <div>
+                    
+                    <div className="added-second-user">
+                        <div className="main-div">
+                            <h1>Products</h1>
+                            <div className="select-filter-div">
+                                <ProductsFilter filter={this.filterHandler} />
+                            </div>
+                            <button onClick={this.deleteButtonClicked} className="delete-all-btn">Delete all!</button>
                         </div>
-                        <button onClick={this.deleteButtonClicked} className="delete-all-btn">Delete all!</button>
+                        <this.props.table />
                     </div>
-                    <this.props.table />
-                </div>
-                {this.props.addAccountClicked ? <SecondLogin /> : null}
-                {this.props.secondUserSigned ? <SecondUser /> : null}
-                <Link to="/new-product"><button className="new-btn" onClick={this.newProductHandler}>New Product</button></Link>
-                {alert}
+                    {this.props.addAccountClicked ? <SecondLogin /> : null}
+                    {this.props.secondUserSigned ? <SecondUser /> : null}
+                    <Link to="/new-product"><button className="new-btn" onClick={this.newProductHandler}>New Product</button></Link>
+                    {alert}
+                </div> : <MergedTableContainer/> }
             </div>
         )
     }
@@ -106,7 +111,8 @@ class Products extends React.Component {
 const mapStateToProps = (state) => {
     return {
         addAccountClicked: state.addAccountClicked,
-        secondUserSigned: state.secondUserSigned
+        secondUserSigned: state.secondUserSigned,
+        tablesMerged: state.tablesMerged
     }
 }
 

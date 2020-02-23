@@ -2,13 +2,13 @@ import React from 'react'
 import './Header.css'
 import { Link, NavLink } from 'react-router-dom'
 
-import { expensesClicked } from '../../redux/actions/productAction'
+import { expensesClicked, mergeTables } from '../../redux/actions/productAction'
 import store from '../../redux/store'
 import SignOut from '../SignOut/SignOut'
 import { Redirect } from 'react-router-dom'
 import Profile from '../../assets/images/small_profile.png'
 import { connect } from 'react-redux'
-import {addAccountClicked} from '../../redux/actions/userAction'
+import {addAccountClicked, secondUserSigned} from '../../redux/actions/userAction'
 class Header extends React.Component {
     constructor(props) {
         super(props)
@@ -42,6 +42,9 @@ class Header extends React.Component {
     }
 
     signOutAccepted = () => {
+        store.dispatch(mergeTables(false))
+        store.dispatch(secondUserSigned(false))
+        store.dispatch(addAccountClicked(false))
         localStorage.clear()
         this.setState({ signOut: true })
     }

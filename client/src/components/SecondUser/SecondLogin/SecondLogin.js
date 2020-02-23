@@ -38,14 +38,11 @@ class SecondLogin extends React.Component {
                 password: this.state.userInfo.password
             })
             .then(res => {
-                console.log('entered')
                 localStorage.setItem('second-jwt', res.data.jwt);
                 localStorage.setItem('second-email', res.data.email);
                 localStorage.setItem('second-first_name', res.data.first_name);
                 localStorage.setItem('second-last_name', res.data.last_name);
                 localStorage.setItem('second-userid', res.data.userid);
-               // const name = res.data.first_name + ' ' + res.data.last_name
-                //store.dispatch(saveUserName(name))
                 this.setState({ signed: true, error: false })
                 store.dispatch(secondUserSigned(true))
                 store.dispatch(addAccountClicked(false))
@@ -55,36 +52,37 @@ class SecondLogin extends React.Component {
                 console.log(err)
             });
     }
-  
+
     cancelAddAccount = () => {
-        console.log('clicked')
         store.dispatch(addAccountClicked(false))
     }
 
     render() {
         var labels = ["Email", "Password"]
-                var inputs = Object.keys(this.state.userInfo).map((info, index) => {
-                        return (
-                                <Input key={index} htmlFor={info} labelName={labels[index]} inputId={info} saveUser={this.saveLoginData} />
-                        )
-                })
+        var inputs = Object.keys(this.state.userInfo).map((info, index) => {
+            return (
+                <Input key={index} htmlFor={info} labelName={labels[index]} inputId={info} saveUser={this.saveLoginData} />
+            )
+        })
 
         return (
             <div className="second-login">
                 {/* {this.redirectToMain()} */}
-                <main>
-                    <div className="sec-log-box" id="second-login">
-                        <form>
-                            {inputs}
-                            {this.state.error ? <p className="second-error-p">Wrong email or password!</p> : null}
-                            <button className="second-primary-btn" onClick={this.signIn}>Sign in</button>
-                            <button className="second-primary-btn" onClick={this.cancelAddAccount}>Cancel</button>
-                        </form>
+                <div className="sec-log-box">
+                    <form>
+                        {inputs}
+                        {this.state.error ? <p className="second-error-p">Wrong email or password!</p> : null}
+                        <button className="second-primary-btn" onClick={this.signIn}>Sign in</button>
+                        <button className="second-primary-btn" onClick={this.cancelAddAccount}>Cancel</button>
+                    </form>
+                    <div className="notif-div">
+                        <p className="notif-p"><i className="fas fa-exclamation-triangle"></i>You can't modify or delete any of the products of the second user!</p>
                     </div>
-                </main>
+                </div>
+
             </div>
         )
     }
 }
 
-export default SecondLogin
+export default SecondLogin;

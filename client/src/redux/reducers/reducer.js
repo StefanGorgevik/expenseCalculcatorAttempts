@@ -1,6 +1,8 @@
 const initState = {
     products: [],
     secondUserProducts: [],
+    mergedProducts: [],
+    tablesMerged: false,
     totalPrice: '',
     secondUserTotalPrice: '',
     productToEdit: '',
@@ -36,7 +38,6 @@ export function reducer(state = initState, action) {
         case "SECOND_USER_GET_TOTAL_PRICE": {
             return { ...state, secondUserTotalPrice: action.payload }
         }
-
         case "EDIT_PRODUCT": {
             return { ...state, productToEdit: action.product }
         }
@@ -58,6 +59,9 @@ export function reducer(state = initState, action) {
         }
         case "SECOND_USER_SIGNED": {
             return { ...state, secondUserSigned: action.payload }
+        }
+        case "MERGE_TABLES": {
+            return {...state, mergedProducts: state.products.concat(state.secondUserProducts), tablesMerged: action.payload}
         }
         default:
             return state

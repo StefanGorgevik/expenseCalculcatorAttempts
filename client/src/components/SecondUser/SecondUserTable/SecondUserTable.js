@@ -59,8 +59,6 @@ class Table extends React.Component {
         if (this.props.secondUserProducts) {
             tableRow = this.props.secondUserProducts.map(product => {
                 return (<TableRow key={product.name + Math.random()} name={product.name}
-                    deleteProduct={() => this.deleteProductHandler(product)}
-                    editProduct={() => this.editProduct(product)}
                     type={product.type}
                     description={product.description}
                     date={product.date}

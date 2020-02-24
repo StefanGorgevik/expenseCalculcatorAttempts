@@ -117,7 +117,7 @@ class Table extends React.Component {
             />
         }
         return (
-            <React.Fragment>
+            <div>
                 <main className="main-box-table">
                     <table className="table">
                         <thead>
@@ -139,7 +139,7 @@ class Table extends React.Component {
                     </table>
                 </main>
                 {alert}
-            </React.Fragment>
+            </div>
         )
     }
 }

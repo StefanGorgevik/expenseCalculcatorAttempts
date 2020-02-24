@@ -21,7 +21,7 @@ class Table extends React.Component {
             axios.get(`http://localhost:8005/app/v1/products?sort=${this.props.filterBy}`,
                 {
                     headers: {
-                        'Authorization': `Bearer ${localStorage.getItem('jwt')}`
+                        'Authorization': `Bearer ${localStorage.getItem('second-jwt')}`
                     }
                 }
             )
@@ -56,8 +56,8 @@ class Table extends React.Component {
 
     render() {
         let tableRow = null;
-        if (this.props.products) {
-            tableRow = this.props.products.map(product => {
+        if (this.props.secondUserProducts) {
+            tableRow = this.props.secondUserProducts.map(product => {
                 return (<TableRow key={product.name + Math.random()} name={product.name}
                     deleteProduct={() => this.deleteProductHandler(product)}
                     editProduct={() => this.editProduct(product)}
@@ -98,7 +98,7 @@ class Table extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        products: state.secondUserProducts,
+        secondUserProducts: state.secondUserProducts,
         expensesClicked: state.expensesClicked,
         tableUpdated: state.tableUpdated,
         filterBy: state.filterBy

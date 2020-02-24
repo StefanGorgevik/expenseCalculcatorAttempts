@@ -8,6 +8,7 @@ import { connect } from 'react-redux'
 class Table extends React.Component {
     render() {
         const products = this.props.mergedProducts;
+        
         var secondUserTotalPrice = 0;
         for(var i = 0; i < products.length; i++) {
             secondUserTotalPrice += products[i].price;

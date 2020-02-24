@@ -19,7 +19,6 @@ span,p {
     justify-content: space-between;
 }
 
-
 .main-div h1 {
     margin-left: 140px;
     margin-top: 40px;
@@ -89,8 +88,9 @@ span,p {
 }
 
 .select-filter-div {
-    margin-right: -40px;
-    margin-top: 3;
+    position: absolute;
+    right:380px;
+    top:125px;
 }
 
 @media screen and (max-width: 800px) {

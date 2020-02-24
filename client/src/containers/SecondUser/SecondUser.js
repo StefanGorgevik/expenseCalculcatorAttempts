@@ -14,21 +14,6 @@ class SecondUser extends React.Component {
     signOutClickedHandler = () => {
         store.dispatch(secondSignOutClicked(true))
     }
-
-    // hideSignOutHandler = () => {
-    //     store.dispatch(SecondUserSignOut(false))
-    // }
-
-    // signOutSecondUser = () => {
-    //     let keysToRemove = ["second-jwt", "second-first_name", "second-last_name", "second-email", "second-userid"];
-    //     keysToRemove.forEach(k => {
-    //         localStorage.removeItem(k);
-    //     })
-    //     store.dispatch(secondUserSigned(false))
-    //     store.dispatch(addAccountClicked(false))
-    //     store.dispatch(SecondUserSignOut(false))
-    // }
-
     mergeTables = () => {
         store.dispatch(mergeTables(true, "name"));
     }
@@ -43,9 +28,6 @@ class SecondUser extends React.Component {
                     <button onClick={this.mergeTables} className="merge-tables-btn">Merge Tables</button>
                 </div>
                 <SecondUserTable />
-                {/* {this.state.signOutClicked ? <SecondUserSignOut hide={this.hideSignOutHandler}
-                    signOutAccepted={this.signOutSecondUser}
-                /> : null} */}
             </div>
         )
     }

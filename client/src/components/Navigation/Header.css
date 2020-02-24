@@ -1,3 +1,7 @@
+.header-div {
+    margin-bottom: -30px;
+}
+
 header {
     width: 100%;
     display: flex;

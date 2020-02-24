@@ -20,7 +20,6 @@ class Table extends React.Component {
     }
 
     componentDidMount() {
-        this.props.getProducts();
         if(this.props.products) {
             axios.get("http://localhost:8005/app/v1/products/?sort=date:desc",
                 {
@@ -70,7 +69,6 @@ class Table extends React.Component {
         const clicked = !this.state.editProductClicked
         store.dispatch(editProduct(product));
         store.dispatch(editProductClicked(clicked));
-
     }
 
     deleteProduct = (product, productID) => {
@@ -154,12 +152,4 @@ function mapStateToProps(state) {
     }
 }
 
-function mapDispatchToProps(dispatch) {
-    return {
-        getProducts: () => {
-            dispatch(getProducts())
-        }
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Table)
+export default connect(mapStateToProps)(Table)

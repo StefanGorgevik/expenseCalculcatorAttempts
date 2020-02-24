@@ -24,12 +24,6 @@ class SecondLogin extends React.Component {
         this.setState({ ...this.state.userInfo, userInfo: { ...this.state.userInfo, [event.target.id]: event.target.value } })
     }
 
-    // redirectToMain = () => {
-    //     if (this.state.signed) {
-    //         return <Redirect to='/products' />
-    //     }
-    // }
-
     signIn = (event) => {
         event.preventDefault();
         axios.post('http://127.0.0.1:8006/app/v1/auth/login',
@@ -67,7 +61,6 @@ class SecondLogin extends React.Component {
 
         return (
             <div className="second-login">
-                {/* {this.redirectToMain()} */}
                 <div className="sec-log-box">
                     <form>
                         {inputs}
@@ -79,7 +72,6 @@ class SecondLogin extends React.Component {
                         <p className="notif-p"><i className="fas fa-exclamation-triangle"></i>You can't modify or delete any of the products of the second user!</p>
                     </div>
                 </div>
-
             </div>
         )
     }

@@ -12,26 +12,21 @@ class Table extends React.Component {
         super(props);
         this.state = {
             alertShow: false,
-            product: null,
-            editProductClicked: false
+            filter: this.props.filterBy
         }
     }
 
-    componentDidMount() {
-        if(this.props.products) {
-            axios.get("http://localhost:8005/app/v1/products/?sort=date:desc",
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.filterBy !== this.props.filterBy) {
+            axios.get(`http://localhost:8005/app/v1/products?sort=${this.props.filterBy}`,
                 {
                     headers: {
-                        'Authorization': `Bearer ${localStorage.getItem('second-jwt')}`
+                        'Authorization': `Bearer ${localStorage.getItem('jwt')}`
                     }
-                })
+                }
+            )
                 .then(res => {
                     store.dispatch(getProductsSecond(res.data));
-                    let totalPrice = 0;
-                    for (let i = 0; i < res.data.length; i++) {
-                        totalPrice += parseInt(res.data[i].price)
-                    }
-                    store.dispatch(getTotalPriceSecond(totalPrice));
                 })
                 .catch(err => {
                     console.log(err);
@@ -39,8 +34,27 @@ class Table extends React.Component {
         }
     }
 
-    render() {
+    componentDidMount() {
+        axios.get("http://localhost:8005/app/v1/products/?sort=date:desc",
+            {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('second-jwt')}`
+                }
+            })
+            .then(res => {
+                store.dispatch(getProductsSecond(res.data));
+                let totalPrice = 0;
+                for (let i = 0; i < res.data.length; i++) {
+                    totalPrice += parseInt(res.data[i].price)
+                }
+                store.dispatch(getTotalPriceSecond(totalPrice));
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
 
+    render() {
         let tableRow = null;
         if (this.props.products) {
             tableRow = this.props.products.map(product => {
@@ -51,7 +65,7 @@ class Table extends React.Component {
                     description={product.description}
                     date={product.date}
                     price={product.price}
-                    
+
                 />)
             })
         }
@@ -86,7 +100,8 @@ function mapStateToProps(state) {
     return {
         products: state.secondUserProducts,
         expensesClicked: state.expensesClicked,
-        tableUpdated: state.tableUpdated
+        tableUpdated: state.tableUpdated,
+        filterBy: state.filterBy
     }
 }
 

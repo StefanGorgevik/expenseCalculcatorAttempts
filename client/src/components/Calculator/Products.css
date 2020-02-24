@@ -1,18 +1,4 @@
 
-header {
-    width: 100%;
-    display: flex;
-    background-color: #fff;
-    justify-content: space-between;
-    min-height: 75px;
-}
-.nav {
-    display: flex;
-    width: 100%;
-    justify-content: flex-end;
-    align-content: center;
-    align-items: center;
-}
 button {
     cursor: pointer;
 }
@@ -44,8 +30,9 @@ span,p {
     bottom: 100px;
     right: 155px; 
     border: none;
-    font-size: 15px;
+    font-size: 17px;
     background-color: #576574;
+    opacity:0.5;
     box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.17);
     color: white;
     font-weight: 600;
@@ -55,6 +42,12 @@ span,p {
     padding: 0px 10px;
     border-radius: 5px;
     font-family: 'Roboto', sans-serif;
+}
+
+.new-btn:hover{
+    font-size: 19px;
+    height: 58px;
+    opacity: 2;
 }
 
 .delete-all-btn {
@@ -73,6 +66,12 @@ span,p {
     top: 55px;
     right: 175px;
 }
+.delete-all-btn:hover {
+    height: 30px;
+    min-width: 135;
+    font-size: 18px;
+}
+
 .new-btn a {
     text-decoration: none;
     color: white;

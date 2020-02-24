@@ -1,22 +1,21 @@
 import React from 'react'
 
 import MergedTableRow from '../MergedTableRow/MergedTableRow'
+import './MergedTable.css'
 
 import { connect } from 'react-redux'
 
 class Table extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-        }
-    }
-
-
     render() {
-        console.log(this.props.mergedProducts);
+        const products = this.props.mergedProducts;
+        var secondUserTotalPrice = 0;
+        for(var i = 0; i < products.length; i++) {
+            secondUserTotalPrice += products[i].price;
+        }
+
         var mergedTableRow = null;
-        if (this.props.mergedProducts) {
-            mergedTableRow = this.props.mergedProducts.map(product => {
+        if (products) {
+            mergedTableRow = products.map(product => {
                 return (<MergedTableRow key={product.name + Math.random()} 
                     name={product.name}
                     type={product.type}
@@ -30,8 +29,8 @@ class Table extends React.Component {
 
         return (
             <React.Fragment>
-                <main className="main-box-table">
-                    <table className="table">
+                <main className="merged-main-box-table">
+                    <table className="merged-table">
                         <thead>
                             <tr>
                                 <th>User Name</th>
@@ -44,9 +43,17 @@ class Table extends React.Component {
                         </thead>
                         <tbody>
                             <tr>
-                                <td id="emptyTd"></td>
+                                <td id="merged-emptyTd"></td>
                             </tr>
                             {mergedTableRow}
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>Total price:</td>
+                                <td id="merged-price-td">{secondUserTotalPrice}</td>
+                            </tr>
                         </tbody>
                     </table>
                 </main>

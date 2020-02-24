@@ -16,9 +16,8 @@
 .second-user-sign-out-btn {
     width: 130px;
     height: 25px;
-    position: absolute;
-    top: 460px;
-    right: 160px;
+    margin-top:50px;
+    margin-left:25px;
     border: none;
     font-size: 15px;
     background-color: rgb(251, 49, 49);
@@ -32,10 +31,10 @@
 
 .merge-tables-btn { 
     margin-top: 35px;
-    margin-left: 335px;
+    margin-left: 285px;
     border: none;
     font-size: 15px;
-    background-color: #576574;
+    background-color: #0f2236;
     box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.17);
     color: white;
     font-weight: 600;
@@ -45,4 +44,16 @@
     padding: 0px 10px;
     border-radius: 5px;
     font-family: 'Roboto', sans-serif;
+}
+
+.merge-tables-btn:hover {
+    height: 55px;
+    min-width: 10%;
+    font-size: 18px;
+}
+
+.second-user-sign-out-btn:hover {
+    height: 30px;
+    min-width: 135;
+    font-size: 18px;
 }

@@ -11,7 +11,9 @@ const initState = {
     tableUpdated: false,
     userName: '',
     addAccountClicked: false,
-    secondUserSigned: false
+    secondUserSigned: false,
+    filterBy: null,
+    secondSignOutClicked: false
 }
 
 export function reducer(state = initState, action) {
@@ -50,7 +52,7 @@ export function reducer(state = initState, action) {
         }
         case "TABLE_UPDATED": {
             return { ...state, tableUpdated: action.tableUpdated }
-        }     
+        }
         case "SAVE_USER_NAME": {
             return { ...state, userName: action.userName }
         }
@@ -61,9 +63,24 @@ export function reducer(state = initState, action) {
             return { ...state, secondUserSigned: action.payload }
         }
         case "MERGE_TABLES": {
-            return {...state, mergedProducts: state.products.concat(state.secondUserProducts), tablesMerged: action.payload}
+            return {
+                ...state, mergedProducts:
+                    state.products.concat(state.secondUserProducts).sort((a, b) =>
+                        (a[action.filterOption] > b[action.filterOption]) ? 1 : ((b[action.filterOption] > a[action.filterOption]) ? -1 : 0)),
+                tablesMerged: action.payload
+            }
+        }
+        case "FILTER_BY": {
+            return {
+                ...state, filterBy: action.payload
+            }
+        }
+        case "SECOND_SIGNOUT_CLICKED": {
+            return {
+                ...state, secondSignOutClicked: action.payload
+            }
         }
         default:
-            return state
+            return state;
     }
 }

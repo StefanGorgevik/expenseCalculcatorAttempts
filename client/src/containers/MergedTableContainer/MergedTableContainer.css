@@ -19,3 +19,27 @@
     border-radius: 5px;
     font-family: 'Roboto', sans-serif;
 }
+
+.go-back-btn:hover {
+    height: 55px;
+    min-width: 10%;
+    font-size: 18px;
+}
+
+.merged-select-div {
+    position: absolute;
+    right: 600px;
+    top: 120px;
+    margin: 0 auto;
+}
+
+.merged-select{
+    height: 35px;
+    color: #8d8d8d;
+    margin-left: 10px;
+}
+.merged-select:hover {
+    height: 40px;
+    color: black;
+    font-size: 18px;
+}

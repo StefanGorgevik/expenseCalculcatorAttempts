@@ -63,7 +63,10 @@
 }
 
 .delete {
-    margin-top: -300px;
+    margin-top: -0px;
+}
+.delete-second {
+    margin-top: -105px;
 }
 
 .log-out {

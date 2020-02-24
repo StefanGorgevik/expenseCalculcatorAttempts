@@ -1,33 +1,39 @@
-.table {
+.merged-table {
     width: 85%;
     border-collapse: collapse; 
     text-align: center;  
 }
-.table tr td {
+.merged-table tr td {
     padding: 0;
 }
-.table thead{
+.merged-table thead{
     border-bottom: 1px solid black;
 }
-.table thead th{
+.merged-table thead th{
     height: 50px;
 }
 
-.body-tr{
+.merged-body-tr{
     background-color: white;
     border-bottom: 5px solid #E5EDF5;
 }
-#emptyTd {
+#merged-emptyTd {
     height: 12px;
     background-color: inherit;
 }
 
-.table .body-tr{
+.merged-table .merged-body-tr{
     height: 50px;
 }
 
-.main-box-table{
+.merged-main-box-table{
     display: flex;
     justify-content: center;
     
+}
+
+#merged-price-td {
+    font-size: 22px;
+    font-weight: bold;
+    background-color: rgb(253, 186, 186);
 }

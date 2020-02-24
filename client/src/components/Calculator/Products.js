@@ -5,7 +5,7 @@ import axios from 'axios'
 
 import Alert from '../Alert/Alert'
 import store from '../../redux/store'
-import { editProductClicked, getProducts, tableUpdated } from '../../redux/actions/productAction'
+import { editProductClicked, getProducts, tableUpdated, filterBy } from '../../redux/actions/productAction'
 import { connect } from 'react-redux'
 import SecondLogin from '../SecondUser/SecondLogin/SecondLogin'
 import SecondUser from '../../containers/SecondUser/SecondUser'
@@ -32,7 +32,6 @@ class Products extends React.Component {
             )
                 .then(res => {
                     store.dispatch(getProducts(res.data));
-
                 })
                 .catch(err => {
                     console.log(err);
@@ -47,6 +46,7 @@ class Products extends React.Component {
 
     filterHandler = (event) => {
         this.setState({ filterOption: event.target.value })
+        store.dispatch(filterBy(event.target.value));
     }
 
     deleteAllProducts = () => {
@@ -80,29 +80,29 @@ class Products extends React.Component {
             alert = <Alert hide={this.hideAlert}
                 delete={this.deleteAllProducts}
                 deleteAllClicked={this.state.deleteAllClicked}
+                userSigned={this.props.secondUserSigned}
             />
         }
         return (
-            <div>
-            <this.props.header />
-            {!this.props.tablesMerged ?
-                <div>
-                    
-                    <div className="added-second-user">
-                        <div className="main-div">
-                            <h1>Products</h1>
-                            <div className="select-filter-div">
-                                <ProductsFilter filter={this.filterHandler} />
+            <div className="products-div">
+            {alert}
+            {this.props.addAccountClicked ? <SecondLogin /> : null}
+                <this.props.header />
+                {!this.props.tablesMerged ?
+                    <div>
+                        <div className="added-second-user">
+                            <div className="main-div">
+                                <h1>Products</h1>
+                                <div className="select-filter-div">
+                                    <ProductsFilter filter={this.filterHandler} />
+                                </div>
+                                <button onClick={this.deleteButtonClicked} className="delete-all-btn">Delete all!</button>
                             </div>
-                            <button onClick={this.deleteButtonClicked} className="delete-all-btn">Delete all!</button>
+                            <this.props.table />
                         </div>
-                        <this.props.table />
-                    </div>
-                    {this.props.addAccountClicked ? <SecondLogin /> : null}
-                    {this.props.secondUserSigned ? <SecondUser /> : null}
-                    <Link to="/new-product"><button className="new-btn" onClick={this.newProductHandler}>New Product</button></Link>
-                    {alert}
-                </div> : <MergedTableContainer/> }
+                        {this.props.secondUserSigned ? <SecondUser /> : null}
+                        {this.props.secondUserSigned ? null : <Link to="/new-product"><button className="new-btn" onClick={this.newProductHandler}>New Product</button></Link>}
+                    </div> : <MergedTableContainer />}
             </div>
         )
     }

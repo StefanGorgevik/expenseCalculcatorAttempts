@@ -60,9 +60,24 @@ export const tableUpdated = (tableUpdated) => {
     }
 }
 
-export const mergeTables = (tablesMerged) => {
+export const mergeTables = (tablesMerged, filterOption) => {
     return {
         type: "MERGE_TABLES",
-        payload: tablesMerged
+        payload: tablesMerged,
+        filterOption: filterOption
     }
 }
+
+export const filterBy = (filter) => {
+    return {
+        type: "FILTER_BY",
+        payload: filter
+    }
+}
+
+export const secondSignOutClicked = (bool) => {
+    return {
+        type: "SECOND_SIGNOUT_CLICKED",
+        payload: bool
+    }
+} 
